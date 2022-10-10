@@ -19,7 +19,7 @@ func getColorByKeyIndent(indent int, basicIndentWidth int) color.Color {
 	case 1:
 		return color.Blue
 	default:
-		return color.Blue
+		return color.BlueLight
 	}
 }
 
@@ -49,8 +49,8 @@ func getColorByValueType(val string) color.Color {
 	return StringColor
 }
 
-func getColorsByBackground() []color.Color {
-	return colorsForDarkBackground
+func getAlternatingColors() []color.Color {
+	return alternatingColors
 }
 
 func getHeaderColor() color.Color {

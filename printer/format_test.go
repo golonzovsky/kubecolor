@@ -69,13 +69,13 @@ func Test_getColorsByBackground(t *testing.T) {
 		dark     bool
 		expected []color.Color
 	}{
-		{"dark", true, colorsForDarkBackground},
+		{"dark", true, alternatingColors},
 	}
 	for _, tt := range tests {
 		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
-			got := getColorsByBackground()
+			got := getAlternatingColors()
 			if diff := cmp.Diff(got, tt.expected); diff != "" {
 				t.Errorf("fail: %v", diff)
 			}

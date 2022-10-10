@@ -71,7 +71,7 @@ func (dp *DescribePrinter) Print(r io.Reader, w io.Writer) {
 
 		// when there are multiple columns, treat is as table format
 		if len(columns) > 2 {
-			dp.TablePrinter.printLineAsTableFormat(w, line, getColorsByBackground())
+			dp.TablePrinter.printLineAsTableFormat(w, line, getAlternatingColors())
 			continue
 		}
 

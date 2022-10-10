@@ -232,8 +232,8 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 	printer.Print(r, w)
 }
 
-func isIp(column string) bool {
-	match, _ := regexp.MatchString("\\d+\\.\\d+\\.\\d+\\.\\d+", column)
+func isIp(value string) bool {
+	match, _ := regexp.MatchString("^\\d+\\.\\d+\\.\\d+\\.\\d+", value)
 	return match
 }
 

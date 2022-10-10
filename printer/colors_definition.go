@@ -3,11 +3,9 @@ package printer
 import "github.com/kubecolor/kubecolor/color"
 
 var (
-	// Preset of colors for background
-	// Please use them when you just need random colors
-	colorsForDarkBackground = []color.Color{
-		color.GrayLight,
-		color.Cyan,
+	alternatingColors = []color.Color{
+		color.BlueLight,
+		color.MagentaLight,
 	}
 
 	// colors to be recommended to be used for some context

@@ -38,7 +38,7 @@ func (tp *TablePrinter) Print(r io.Reader, w io.Writer) {
 			continue
 		}
 
-		tp.printLineAsTableFormat(w, line, getColorsByBackground())
+		tp.printLineAsTableFormat(w, line, getAlternatingColors())
 	}
 }
 
