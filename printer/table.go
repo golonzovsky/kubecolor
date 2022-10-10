@@ -70,8 +70,6 @@ func (tp *TablePrinter) isHeader(line string) bool {
 // nginx-lpv5x              1/1     Running   0          31h
 // ---------------------------------------------------------
 // This function requires a line and tries to colorize it by each column.
-// If dark is true, use colors which are readable in dark-backgrounded environment, else,
-// it uses colors for light-backgrounded env.
 // This function doesn't respect if the line is "header", so
 // if you want to specify a special color for header, you must not pass the line
 // to this function.

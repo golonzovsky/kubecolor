@@ -18,10 +18,6 @@ Colorize your kubectl output
 
 ![image](https://user-images.githubusercontent.com/60682957/95733397-0a887780-0cbd-11eb-8875-bb1000e0e597.png)
 
-* You can change color theme for light-backgrounded environment
-
-![image](https://user-images.githubusercontent.com/60682957/95733403-0c523b00-0cbd-11eb-9ff9-abc5469e97ca.png)
-
 ## What's this?
 
 kubecolor colorizes your `kubectl` command output and does nothing else.
@@ -51,12 +47,6 @@ Additionally, if `kubectl` resulted an error, kubecolor just shows the error mes
 ### Download binary via GitHub release
 
 Go to [Release page](https://github.com/kubecolor/kubecolor/releases) then download the binary which fits your environment.
-
-### Mac and Linux users via Homebrew
-
-```sh
-brew install kubecolor/tap/kubecolor
-```
 
 ### Manually via go command
 
@@ -100,11 +90,6 @@ Available flags for kubecolor. When you pass them, kubecolor will understand the
 * `--kubecolor-version`
 
 Prints the version of kubecolor (not kubectl one).
-
-* `--light-background`
-
-When your terminal's background color is something light (e.g white), default color preset might look too bright and not readable.
-If so, specify `--light-background` as a command line argument. kubecolor will use a color preset for light-backgrounded environment.
 
 * `--force-colors`
 
@@ -200,7 +185,7 @@ You can customize threshold level by using environment variable `KUBECOLOR_OBJ_F
 KUBECOLOR_OBJ_FRESH="1m" kubecolor get po
 ```
 
-Default value is `0s`, it means is disabled.
+Default value is `60s`.
 ## Supported kubectl version
 
 Because kubecolor internally calls `kubectl` command, if you are using unsupported kubectl version, it's also not supported by kubecolor.
