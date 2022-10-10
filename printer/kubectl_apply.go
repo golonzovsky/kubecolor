@@ -9,9 +9,7 @@ import (
 	"github.com/kubecolor/kubecolor/color"
 )
 
-type ApplyPrinter struct {
-	DarkBackground bool
-}
+type ApplyPrinter struct{}
 
 // kubectl apply
 // deployment.apps/foo unchanged
@@ -32,18 +30,9 @@ func (ap *ApplyPrinter) Print(r io.Reader, w io.Writer) {
 		applyActionUnchanged:  color.Magenta,
 		dryRunStr:             color.Cyan,
 	}
-	lightColors := map[string]color.Color{
-		applyActionCreated:    color.Green,
-		applyActionConfigured: color.Yellow,
-		applyActionUnchanged:  color.Magenta,
-		dryRunStr:             color.Blue,
-	}
 
-	colors := func(action string, dark bool) color.Color {
-		if dark {
-			return darkColors[action]
-		}
-		return lightColors[action]
+	colors := func(action string) color.Color {
+		return darkColors[action]
 	}
 
 	colorize := func(line, action string, dryRun bool, wr io.Writer) {
@@ -51,14 +40,14 @@ func (ap *ApplyPrinter) Print(r io.Reader, w io.Writer) {
 			arg := strings.TrimSuffix(line, fmt.Sprintf(" %s %s", action, dryRunStr))
 			fmt.Fprintf(w, "%s %s %s\n",
 				arg,
-				color.Apply(action, colors(action, ap.DarkBackground)),
-				color.Apply(dryRunStr, colors(dryRunStr, ap.DarkBackground)),
+				color.Apply(action, colors(action)),
+				color.Apply(dryRunStr, colors(dryRunStr)),
 			)
 			return
 		}
 
 		arg := strings.TrimSuffix(line, " "+action)
-		fmt.Fprintf(w, "%s %s\n", arg, color.Apply(action, colors(action, ap.DarkBackground)))
+		fmt.Fprintf(w, "%s %s\n", arg, color.Apply(action, colors(action)))
 	}
 
 	scanner := bufio.NewScanner(r)

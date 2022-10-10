@@ -10,15 +10,13 @@ import (
 
 func Test_ApplyPrinter_Print(t *testing.T) {
 	tests := []struct {
-		name           string
-		darkBackground bool
-		tablePrinter   *TablePrinter
-		input          string
-		expected       string
+		name         string
+		tablePrinter *TablePrinter
+		input        string
+		expected     string
 	}{
 		{
-			name:           "created",
-			darkBackground: true,
+			name: "created",
 			input: testutil.NewHereDoc(`
 				deployment.apps/foo created`),
 			expected: testutil.NewHereDoc(`
@@ -26,8 +24,7 @@ func Test_ApplyPrinter_Print(t *testing.T) {
 			`),
 		},
 		{
-			name:           "configured",
-			darkBackground: true,
+			name: "configured",
 			input: testutil.NewHereDoc(`
 				deployment.apps/foo configured`),
 			expected: testutil.NewHereDoc(`
@@ -35,8 +32,7 @@ func Test_ApplyPrinter_Print(t *testing.T) {
 			`),
 		},
 		{
-			name:           "unchanged",
-			darkBackground: true,
+			name: "unchanged",
 			input: testutil.NewHereDoc(`
 				deployment.apps/foo unchanged`),
 			expected: testutil.NewHereDoc(`
@@ -44,8 +40,7 @@ func Test_ApplyPrinter_Print(t *testing.T) {
 			`),
 		},
 		{
-			name:           "dry run",
-			darkBackground: true,
+			name: "dry run",
 			input: testutil.NewHereDoc(`
 				deployment.apps/foo unchanged (dry run)`),
 			expected: testutil.NewHereDoc(`
@@ -53,8 +48,7 @@ func Test_ApplyPrinter_Print(t *testing.T) {
 			`),
 		},
 		{
-			name:           "something else. This likely won't happen but fallbacks here just in case.",
-			darkBackground: true,
+			name: "something else. This likely won't happen but fallbacks here just in case.",
 			input: testutil.NewHereDoc(`
 				deployment.apps/foo bar`),
 			expected: testutil.NewHereDoc(`
@@ -68,7 +62,7 @@ func Test_ApplyPrinter_Print(t *testing.T) {
 			t.Parallel()
 			r := strings.NewReader(tt.input)
 			var w bytes.Buffer
-			printer := ApplyPrinter{DarkBackground: tt.darkBackground}
+			printer := ApplyPrinter{}
 			printer.Print(r, &w)
 			testutil.MustEqual(t, tt.expected, w.String())
 		})

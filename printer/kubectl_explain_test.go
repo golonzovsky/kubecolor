@@ -10,16 +10,14 @@ import (
 
 func Test_ExplainPrinter_Print(t *testing.T) {
 	tests := []struct {
-		name           string
-		darkBackground bool
-		recursive      bool
-		input          string
-		expected       string
+		name      string
+		recursive bool
+		input     string
+		expected  string
 	}{
 		{
-			name:           "kind, version, description, fields can be colorized with recursive=false",
-			darkBackground: true,
-			recursive:      false,
+			name:      "kind, version, description, fields can be colorized with recursive=false",
+			recursive: false,
 			input: testutil.NewHereDoc(`
 				KIND:     Node
 				VERSION:  v1
@@ -89,9 +87,8 @@ func Test_ExplainPrinter_Print(t *testing.T) {
 			`),
 		},
 		{
-			name:           "kind, version, description, fields can be colorized with recursive=true",
-			darkBackground: true,
-			recursive:      true,
+			name:      "kind, version, description, fields can be colorized with recursive=true",
+			recursive: true,
 			input: testutil.NewHereDoc(`
 				KIND:     Node
 				VERSION:  v1
@@ -162,7 +159,7 @@ func Test_ExplainPrinter_Print(t *testing.T) {
 			t.Parallel()
 			r := strings.NewReader(tt.input)
 			var w bytes.Buffer
-			printer := ExplainPrinter{DarkBackground: tt.darkBackground, Recursive: tt.recursive}
+			printer := ExplainPrinter{Recursive: tt.recursive}
 			printer.Print(r, &w)
 			testutil.MustEqual(t, tt.expected, w.String())
 		})

@@ -10,14 +10,12 @@ import (
 
 func Test_JsonPrinter_Print(t *testing.T) {
 	tests := []struct {
-		name           string
-		darkBackground bool
-		input          string
-		expected       string
+		name     string
+		input    string
+		expected string
 	}{
 		{
-			name:           "values can be colored by its type",
-			darkBackground: true,
+			name: "values can be colored by its type",
 			input: testutil.NewHereDoc(`
 				{
 				    "apiVersion": "v1",
@@ -37,8 +35,7 @@ func Test_JsonPrinter_Print(t *testing.T) {
 			`),
 		},
 		{
-			name:           "keys can be colored by its indentation level",
-			darkBackground: true,
+			name: "keys can be colored by its indentation level",
 			input: testutil.NewHereDoc(`
 				{
 				    "k1": "v1",
@@ -64,8 +61,7 @@ func Test_JsonPrinter_Print(t *testing.T) {
 			`),
 		},
 		{
-			name:           "{} and [] are not colorized",
-			darkBackground: true,
+			name: "{} and [] are not colorized",
 			input: testutil.NewHereDoc(`
 				{
 				    "apiVersion": "v1",

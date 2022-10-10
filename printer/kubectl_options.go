@@ -9,9 +9,7 @@ import (
 	"github.com/kubecolor/kubecolor/color"
 )
 
-type OptionsPrinter struct {
-	DarkBackground bool
-}
+type OptionsPrinter struct{}
 
 func (op *OptionsPrinter) Print(r io.Reader, w io.Writer) {
 	scanner := bufio.NewScanner(r)

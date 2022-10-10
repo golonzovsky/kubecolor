@@ -9,9 +9,7 @@ import (
 	"github.com/kubecolor/kubecolor/color"
 )
 
-type VersionShortPrinter struct {
-	DarkBackground bool
-}
+type VersionShortPrinter struct{}
 
 // kubectl version --short format
 // Client Version: v1.19.3

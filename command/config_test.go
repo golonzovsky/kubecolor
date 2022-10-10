@@ -23,7 +23,6 @@ func Test_ResolveConfig(t *testing.T) {
 			expectedArgs: []string{"get", "pods"},
 			expectedConf: &KubecolorConfig{
 				Plain:             false,
-				DarkBackground:    true,
 				ForceColor:        false,
 				KubectlCmd:        "kubectl",
 				ObjFreshThreshold: time.Duration(0),
@@ -35,7 +34,6 @@ func Test_ResolveConfig(t *testing.T) {
 			expectedArgs: []string{"get", "pods"},
 			expectedConf: &KubecolorConfig{
 				Plain:             true,
-				DarkBackground:    false,
 				ForceColor:        true,
 				KubectlCmd:        "kubectl",
 				ObjFreshThreshold: time.Duration(0),
@@ -48,7 +46,6 @@ func Test_ResolveConfig(t *testing.T) {
 			expectedArgs:   []string{"get", "pods"},
 			expectedConf: &KubecolorConfig{
 				Plain:             true,
-				DarkBackground:    true,
 				ForceColor:        false,
 				KubectlCmd:        "kubectl.1.19",
 				ObjFreshThreshold: time.Duration(0),
@@ -61,7 +58,6 @@ func Test_ResolveConfig(t *testing.T) {
 			objFreshAgeThreshold: "1m",
 			expectedConf: &KubecolorConfig{
 				Plain:             false,
-				DarkBackground:    true,
 				ForceColor:        false,
 				KubectlCmd:        "kubectl",
 				ObjFreshThreshold: time.Duration(60 * 1000000000),
