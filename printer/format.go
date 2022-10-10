@@ -26,16 +26,24 @@ func getColorByKeyIndent(indent int, basicIndentWidth int) color.Color {
 // getColorByValueType returns a color by value.
 // This is intended to be used to colorize any structured data e.g. Json, Yaml.
 func getColorByValueType(val string) color.Color {
-	if val == "null" || val == "<none>" || val == "<unknown>" {
+	if val == "null" || val == "<none>" || val == "<unknown>" || val == "<nil>" {
 		return NullColor
 	}
 
-	if val == "true" || val == "false" {
+	if val == "true" || val == "false" || val == "True" || val == "False" {
 		return BoolColor
 	}
 
 	if _, err := strconv.Atoi(val); err == nil {
 		return NumberColor
+	}
+
+	if c, is := ColorStatus(val); is {
+		return c
+	}
+
+	if isIp(val) {
+		return color.Blue
 	}
 
 	return StringColor

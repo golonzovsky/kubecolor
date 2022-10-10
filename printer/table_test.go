@@ -113,7 +113,7 @@ func Test_TablePrinter_Print(t *testing.T) {
 
 				}
 
-				return 0, false
+				return color.Magenta, false
 			},
 			withHeader:     true,
 			darkBackground: true,
@@ -179,7 +179,7 @@ func Test_TablePrinter_Print(t *testing.T) {
 			t.Parallel()
 			r := strings.NewReader(tt.input)
 			var w bytes.Buffer
-			printer := NewTablePrinter(tt.withHeader, tt.darkBackground, tt.colorDeciderFn)
+			printer := NewTablePrinter(tt.withHeader, tt.colorDeciderFn)
 			printer.Print(r, &w)
 			testutil.MustEqual(t, tt.expected, w.String())
 		})

@@ -586,7 +586,6 @@ func Test_KubectlOutputColoredPrinter_Print(t *testing.T) {
 			var w bytes.Buffer
 			printer := KubectlOutputColoredPrinter{
 				SubcommandInfo:    tt.subcommandInfo,
-				DarkBackground:    tt.darkBackground,
 				ObjFreshThreshold: tt.objFreshThreshold,
 			}
 			printer.Print(r, &w)

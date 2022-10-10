@@ -24,7 +24,7 @@ func ResolveConfig(args []string) ([]string, *KubecolorConfig) {
 		kubectlCmd = kc
 	}
 
-	objFreshAgeThresholdDuration, _ := time.ParseDuration("0s")
+	objFreshAgeThresholdDuration, _ := time.ParseDuration("60s")
 	objFreshAgeThresholdEnv := "KUBECOLOR_OBJ_FRESH"
 	if objFreshAgeThreshold := os.Getenv(objFreshAgeThresholdEnv); objFreshAgeThreshold != "" {
 		var err error

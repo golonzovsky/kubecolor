@@ -9,6 +9,8 @@ type Color termenv.Color
 var (
 	p = termenv.ColorProfile()
 
+	// https://coolors.co/ff0054-ffc31f-73f59f-66c2cd-32a1ec-546a7b-9d4edd-7b2cbf-e0aaff-b9bfca
+
 	Red          = p.Color("#ff0054")
 	Yellow       = p.Color("#ffc31f")
 	Green        = p.Color("#73f59f")

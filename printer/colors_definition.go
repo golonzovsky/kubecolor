@@ -17,6 +17,6 @@ var (
 	StringColor = color.Green
 	BoolColor   = color.MagentaLight
 	NumberColor = color.Magenta
-	NullColor   = color.Yellow
+	NullColor   = color.Gray
 	HeaderColor = color.GrayLight // for plain table
 )

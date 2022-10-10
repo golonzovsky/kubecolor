@@ -10,16 +10,14 @@ import (
 
 func Test_DescribePrinter_Print(t *testing.T) {
 	tests := []struct {
-		name           string
-		darkBackground bool
-		tablePrinter   *TablePrinter
-		input          string
-		expected       string
+		name         string
+		tablePrinter *TablePrinter
+		input        string
+		expected     string
 	}{
 		{
-			name:           "values can be colored by its type",
-			darkBackground: true,
-			tablePrinter:   nil,
+			name:         "values can be colored by its type",
+			tablePrinter: nil,
 			input: testutil.NewHereDoc(`
 				Name:         nginx-lpv5x
 				Namespace:    default
@@ -41,9 +39,8 @@ func Test_DescribePrinter_Print(t *testing.T) {
 			`),
 		},
 		{
-			name:           "key color changes based on its indentation",
-			darkBackground: true,
-			tablePrinter:   nil,
+			name:         "key color changes based on its indentation",
+			tablePrinter: nil,
 			input: testutil.NewHereDoc(`
 				IP:           172.18.0.7
 				IPs:
@@ -65,9 +62,8 @@ func Test_DescribePrinter_Print(t *testing.T) {
 			`),
 		},
 		{
-			name:           "table format in kubectl describe can be colored by describe",
-			darkBackground: true,
-			tablePrinter:   NewTablePrinter(false, true, nil),
+			name:         "table format in kubectl describe can be colored by describe",
+			tablePrinter: NewTablePrinter(false, nil),
 			input: testutil.NewHereDoc(`
 				Conditions:
 				  Type             Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
@@ -143,7 +139,7 @@ func Test_DescribePrinter_Print(t *testing.T) {
 			t.Parallel()
 			r := strings.NewReader(tt.input)
 			var w bytes.Buffer
-			printer := DescribePrinter{DarkBackground: tt.darkBackground, TablePrinter: tt.tablePrinter}
+			printer := DescribePrinter{TablePrinter: tt.tablePrinter}
 			printer.Print(r, &w)
 			testutil.MustEqual(t, tt.expected, w.String())
 		})

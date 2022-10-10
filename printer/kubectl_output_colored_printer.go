@@ -1,7 +1,6 @@
 package printer
 
 import (
-	"fmt"
 	"io"
 	"regexp"
 	"strconv"
@@ -170,9 +169,16 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 						return color.Yellow, true
 					}
 
-					// Object age when fresh then green
-					if checkIfObjFresh(column, kp.ObjFreshThreshold) {
-						return color.Green, true
+					if isDuration, fresh := checkIfObjFresh(column, kp.ObjFreshThreshold); isDuration {
+						if fresh {
+							return color.Green, true
+						} else {
+							return color.MagentaDark, true
+						}
+					}
+
+					if isIp(column) {
+						return color.Blue, true
 					}
 
 					return color.GrayLight, false
@@ -226,7 +232,12 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 	printer.Print(r, w)
 }
 
-func checkIfObjFresh(value string, threshold time.Duration) bool {
+func isIp(column string) bool {
+	match, _ := regexp.MatchString("\\d+\\.\\d+\\.\\d+\\.\\d+", column)
+	return match
+}
+
+func checkIfObjFresh(value string, threshold time.Duration) (isDuration, fresh bool) {
 	// decode HumanDuration from k8s.io/apimachinery/pkg/util/duration
 	durationRegex := regexp.MustCompile(`^(?P<years>\d+y)?(?P<days>\d+d)?(?P<hours>\d+h)?(?P<minutes>\d+m)?(?P<seconds>\d+s)?$`)
 	matches := durationRegex.FindStringSubmatch(value)
@@ -237,15 +248,10 @@ func checkIfObjFresh(value string, threshold time.Duration) bool {
 		minutes := parseInt64(matches[4])
 		seconds := parseInt64(matches[5])
 		objAgeSeconds := years*365*24*3600 + days*24*3600 + hours*3600 + minutes*60 + seconds
-		objAgeDuration, err := time.ParseDuration(fmt.Sprintf("%ds", objAgeSeconds))
-		if err != nil {
-			return false
-		}
-		if objAgeDuration < threshold {
-			return true
-		}
+		objAgeDuration := time.Duration(objAgeSeconds) * time.Second
+		return true, objAgeDuration < threshold
 	}
-	return false
+	return false, false
 }
 
 func parseInt64(value string) int64 {
