@@ -16,7 +16,6 @@ import (
 // which kubectl subcommand is executed.
 type KubectlOutputColoredPrinter struct {
 	SubcommandInfo    *kubectl.SubcommandInfo
-	DarkBackground    bool
 	Recursive         bool
 	ObjFreshThreshold time.Duration
 }
@@ -105,6 +104,12 @@ func ColorStatus(status string) (color.Color, bool) {
 		"Terminating",
 		"Warning":
 		return color.Yellow, true
+	case
+		"Completed":
+		return color.Gray, true
+	case
+		"Running":
+		return color.Green, true
 	}
 	// some ok status, not colored:
 	// "Pulled",
@@ -116,7 +121,7 @@ func ColorStatus(status string) (color.Color, bool) {
 	// "NodeReady",
 	// "Started",
 	// "Normal",
-	return 0, false
+	return color.White, false
 }
 
 // Print reads r then write it to w, its format is based on kubectl subcommand.
@@ -128,22 +133,25 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 
 	switch kp.SubcommandInfo.Subcommand {
 	case kubectl.Top, kubectl.APIResources:
-		printer = NewTablePrinter(withHeader, kp.DarkBackground, nil)
+		printer = NewTablePrinter(withHeader, nil)
 
 	case kubectl.APIVersions:
-		printer = NewTablePrinter(false, kp.DarkBackground, nil) // api-versions always doesn't have header
+		printer = NewTablePrinter(false, nil) // api-versions always doesn't have header
 
 	case kubectl.Get:
 		switch {
 		case kp.SubcommandInfo.FormatOption == kubectl.None, kp.SubcommandInfo.FormatOption == kubectl.Wide:
 			printer = NewTablePrinter(
 				withHeader,
-				kp.DarkBackground,
 				func(_ int, column string) (color.Color, bool) {
 					// first try to match a status
 					col, matched := ColorStatus(column)
 					if matched {
 						return col, true
+					}
+
+					if column == "<none>" {
+						return color.Gray, true
 					}
 
 					// When Readiness is "n/m" then yellow
@@ -155,7 +163,11 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 								return color.Yellow, true
 							}
 						}
+						return color.Green, true
+					}
 
+					if strings.Contains(column, "ago)") {
+						return color.Yellow, true
 					}
 
 					// Object age when fresh then green
@@ -163,55 +175,47 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 						return color.Green, true
 					}
 
-					return 0, false
+					return color.White, false
 				},
 			)
 		case kp.SubcommandInfo.FormatOption == kubectl.Json:
-			printer = &JsonPrinter{DarkBackground: kp.DarkBackground}
+			printer = &JsonPrinter{}
 		case kp.SubcommandInfo.FormatOption == kubectl.Yaml:
-			printer = &YamlPrinter{DarkBackground: kp.DarkBackground}
+			printer = &YamlPrinter{}
 		}
 
 	case kubectl.Describe:
 		printer = &DescribePrinter{
-			DarkBackground: kp.DarkBackground,
-			TablePrinter: NewTablePrinter(false, kp.DarkBackground, func(_ int, column string) (color.Color, bool) {
+			TablePrinter: NewTablePrinter(false, func(_ int, column string) (color.Color, bool) {
 				return ColorStatus(column)
 			},
 			),
 		}
 	case kubectl.Explain:
 		printer = &ExplainPrinter{
-			DarkBackground: kp.DarkBackground,
-			Recursive:      kp.Recursive,
+			Recursive: kp.Recursive,
 		}
 	case kubectl.Version:
 		switch {
 		case kp.SubcommandInfo.FormatOption == kubectl.Json:
-			printer = &JsonPrinter{DarkBackground: kp.DarkBackground}
+			printer = &JsonPrinter{}
 		case kp.SubcommandInfo.FormatOption == kubectl.Yaml:
-			printer = &YamlPrinter{DarkBackground: kp.DarkBackground}
+			printer = &YamlPrinter{}
 		case kp.SubcommandInfo.Short:
-			printer = &VersionShortPrinter{
-				DarkBackground: kp.DarkBackground,
-			}
+			printer = &VersionShortPrinter{}
 		default:
-			printer = &VersionPrinter{
-				DarkBackground: kp.DarkBackground,
-			}
+			printer = &VersionPrinter{}
 		}
 	case kubectl.Options:
-		printer = &OptionsPrinter{
-			DarkBackground: kp.DarkBackground,
-		}
+		printer = &OptionsPrinter{}
 	case kubectl.Apply:
 		switch {
 		case kp.SubcommandInfo.FormatOption == kubectl.Json:
-			printer = &JsonPrinter{DarkBackground: kp.DarkBackground}
+			printer = &JsonPrinter{}
 		case kp.SubcommandInfo.FormatOption == kubectl.Yaml:
-			printer = &YamlPrinter{DarkBackground: kp.DarkBackground}
+			printer = &YamlPrinter{}
 		default:
-			printer = &ApplyPrinter{DarkBackground: kp.DarkBackground}
+			printer = &ApplyPrinter{}
 		}
 	}
 

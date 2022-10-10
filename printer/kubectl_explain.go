@@ -60,9 +60,9 @@ func (ep *ExplainPrinter) printKeyVal(line string, w io.Writer) {
 
 	key = strings.TrimRight(key, ":")
 
-	key = color.Apply(key, getColorByKeyIndent(0, 2, ep.DarkBackground))
+	key = color.Apply(key, getColorByKeyIndent(0, 2))
 	if val != "" {
-		val = color.Apply(val, getColorByValueType(val, ep.DarkBackground))
+		val = color.Apply(val, getColorByValueType(val))
 	}
 
 	spacesIndices := spaces.FindAllStringIndex(line, -1)
@@ -75,7 +75,7 @@ func (ep *ExplainPrinter) printKeyVal(line string, w io.Writer) {
 }
 
 func (ep *ExplainPrinter) printDescription(line string, w io.Writer) {
-	fmt.Fprintf(w, "%s%s\n", toSpaces(5), color.Apply(strings.TrimLeft(line, " "), getColorByValueType(line, ep.DarkBackground)))
+	fmt.Fprintf(w, "%s%s\n", toSpaces(5), color.Apply(strings.TrimLeft(line, " "), getColorByValueType(line)))
 
 }
 
@@ -102,8 +102,8 @@ func (ep *ExplainPrinter) printKeyAndType(line string, w io.Writer) {
 	key, val := keyAndVal[0], keyAndVal[1]
 
 	val = strings.TrimLeft(strings.TrimRight(val, ">"), "<")
-	key = color.Apply(key, getColorByKeyIndent(indentCnt, 2, ep.DarkBackground))
-	val = color.Apply(val, getColorByValueType(line, ep.DarkBackground))
+	key = color.Apply(key, getColorByKeyIndent(indentCnt, 2))
+	val = color.Apply(val, getColorByValueType(line))
 
 	// I don't know why but kubectl explain uses \t as delimiter
 	fmt.Fprintf(w, "%s%s\t<%s>\n", toSpaces(indentCnt), key, val)

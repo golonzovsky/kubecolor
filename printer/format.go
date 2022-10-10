@@ -14,13 +14,10 @@ func toSpaces(n int) string {
 
 // getColorByKeyIndent returns a color based on the given indent.
 // When you want to change key color based on indent depth (e.g. Json, Yaml), use this function
-func getColorByKeyIndent(indent int, basicIndentWidth int, dark bool) color.Color {
+func getColorByKeyIndent(indent int, basicIndentWidth int) color.Color {
 	switch indent / basicIndentWidth % 2 {
 	case 1:
-		if dark {
-			return color.White
-		}
-		return color.Black
+		return color.White
 	default:
 		return color.Yellow
 	}
@@ -28,50 +25,28 @@ func getColorByKeyIndent(indent int, basicIndentWidth int, dark bool) color.Colo
 
 // getColorByValueType returns a color by value.
 // This is intended to be used to colorize any structured data e.g. Json, Yaml.
-func getColorByValueType(val string, dark bool) color.Color {
+func getColorByValueType(val string) color.Color {
 	if val == "null" || val == "<none>" || val == "<unknown>" {
-		if dark {
-			return NullColorForDark
-		}
-		return NullColorForLight
+		return NullColorForDark
 	}
 
 	if val == "true" || val == "false" {
-		if dark {
-			return BoolColorForDark
-		}
-		return BoolColorForLight
+		return BoolColorForDark
 	}
 
 	if _, err := strconv.Atoi(val); err == nil {
-		if dark {
-			return NumberColorForDark
-		}
-		return NumberColorForLight
+		return NumberColorForDark
 	}
 
-	if dark {
-		return StringColorForDark
-	}
-	return StringColorForLight
+	return StringColorForDark
 }
 
-// getColorsByBackground returns a preset of colors depending on given background color
-func getColorsByBackground(dark bool) []color.Color {
-	if dark {
-		return colorsForDarkBackground
-	}
-
-	return colorsForLightBackground
+func getColorsByBackground() []color.Color {
+	return colorsForDarkBackground
 }
 
-// getHeaderColorByBackground returns a defined color for Header (not actual data) by the background color
-func getHeaderColorByBackground(dark bool) color.Color {
-	if dark {
-		return HeaderColorForDark
-	}
-
-	return HeaderColorForLight
+func getHeaderColorByBackground() color.Color {
+	return HeaderColorForDark
 }
 
 // findIndent returns a length of indent (spaces at left) in the given line

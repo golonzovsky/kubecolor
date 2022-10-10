@@ -10,18 +10,17 @@ import (
 )
 
 type JsonPrinter struct {
-	DarkBackground bool
 }
 
 func (jp *JsonPrinter) Print(r io.Reader, w io.Writer) {
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		line := scanner.Text()
-		printLineAsJsonFormat(line, w, jp.DarkBackground)
+		printLineAsJsonFormat(line, w)
 	}
 }
 
-func printLineAsJsonFormat(line string, w io.Writer, dark bool) {
+func printLineAsJsonFormat(line string, w io.Writer) {
 	indentCnt := findIndent(line)
 	indent := toSpaces(indentCnt)
 	trimmedLine := strings.TrimLeft(line, " ")
@@ -55,18 +54,18 @@ func printLineAsJsonFormat(line string, w io.Writer, dark bool) {
 
 	if len(splitted) == 1 {
 		// when coming here, it will be a value in an array
-		fmt.Fprintf(w, "%s%s\n", indent, toColorizedJsonValue(splitted[0], dark))
+		fmt.Fprintf(w, "%s%s\n", indent, toColorizedJsonValue(splitted[0]))
 		return
 	}
 
 	key := splitted[0]
 	val := splitted[1]
 
-	fmt.Fprintf(w, "%s%s: %s\n", indent, toColorizedJsonKey(key, indentCnt, 4, dark), toColorizedJsonValue(val, dark))
+	fmt.Fprintf(w, "%s%s: %s\n", indent, toColorizedJsonKey(key, indentCnt, 4), toColorizedJsonValue(val))
 }
 
 // toColorizedJsonKey returns colored json key
-func toColorizedJsonKey(key string, indentCnt, basicWidth int, dark bool) string {
+func toColorizedJsonKey(key string, indentCnt, basicWidth int) string {
 	hasColon := strings.HasSuffix(key, ":")
 	// remove colon and double quotations although they might not exist actually
 	key = strings.TrimRight(key, ":")
@@ -77,13 +76,13 @@ func toColorizedJsonKey(key string, indentCnt, basicWidth int, dark bool) string
 		format += ":"
 	}
 
-	return fmt.Sprintf(format, color.Apply(doubleQuoteTrimmed, getColorByKeyIndent(indentCnt, basicWidth, dark)))
+	return fmt.Sprintf(format, color.Apply(doubleQuoteTrimmed, getColorByKeyIndent(indentCnt, basicWidth)))
 }
 
 // toColorizedJsonValue returns colored json value.
 // This function checks it trailing comma and double quotation exist
 // then colorize the given value considering them.
-func toColorizedJsonValue(value string, dark bool) string {
+func toColorizedJsonValue(value string) string {
 	if value == "{" {
 		return "{"
 	}
@@ -119,5 +118,5 @@ func toColorizedJsonValue(value string, dark bool) string {
 		format = `%s`
 	}
 
-	return fmt.Sprintf(format, color.Apply(doubleQuoteTrimmedValue, getColorByValueType(value, dark)))
+	return fmt.Sprintf(format, color.Apply(doubleQuoteTrimmedValue, getColorByValueType(value)))
 }

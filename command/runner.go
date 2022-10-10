@@ -27,11 +27,10 @@ type Printers struct {
 }
 
 // This is defined here to be replaced in test
-var getPrinters = func(subcommandInfo *kubectl.SubcommandInfo, darkBackground bool, objFreshThreshold time.Duration) *Printers {
+var getPrinters = func(subcommandInfo *kubectl.SubcommandInfo, objFreshThreshold time.Duration) *Printers {
 	return &Printers{
 		FullColoredPrinter: &printer.KubectlOutputColoredPrinter{
 			SubcommandInfo:    subcommandInfo,
-			DarkBackground:    darkBackground,
 			Recursive:         subcommandInfo.Recursive,
 			ObjFreshThreshold: objFreshThreshold,
 		},
@@ -95,7 +94,7 @@ func Run(args []string, version string) error {
 		return err
 	}
 
-	printers := getPrinters(subcommandInfo, config.DarkBackground, config.ObjFreshThreshold)
+	printers := getPrinters(subcommandInfo, config.ObjFreshThreshold)
 
 	wg := &sync.WaitGroup{}
 

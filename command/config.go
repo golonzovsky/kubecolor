@@ -8,7 +8,6 @@ import (
 
 type KubecolorConfig struct {
 	Plain                bool
-	DarkBackground       bool
 	ForceColor           bool
 	ShowKubecolorVersion bool
 	KubectlCmd           string
@@ -17,11 +16,8 @@ type KubecolorConfig struct {
 
 func ResolveConfig(args []string) ([]string, *KubecolorConfig) {
 	args, plainFlagFound := findAndRemoveBoolFlagIfExists(args, "--plain")
-	args, lightBackgroundFlagFound := findAndRemoveBoolFlagIfExists(args, "--light-background")
 	args, forceColorFlagFound := findAndRemoveBoolFlagIfExists(args, "--force-colors")
 	args, kubecolorVersionFlagFound := findAndRemoveBoolFlagIfExists(args, "--kubecolor-version")
-
-	darkBackground := !lightBackgroundFlagFound
 
 	kubectlCmd := "kubectl"
 	if kc := os.Getenv("KUBECTL_COMMAND"); kc != "" {
@@ -40,7 +36,6 @@ func ResolveConfig(args []string) ([]string, *KubecolorConfig) {
 
 	return args, &KubecolorConfig{
 		Plain:                plainFlagFound,
-		DarkBackground:       darkBackground,
 		ForceColor:           forceColorFlagFound,
 		ShowKubecolorVersion: kubecolorVersionFlagFound,
 		KubectlCmd:           kubectlCmd,

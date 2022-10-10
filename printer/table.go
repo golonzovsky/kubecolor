@@ -11,7 +11,6 @@ import (
 
 type TablePrinter struct {
 	WithHeader     bool
-	DarkBackground bool
 	ColorDeciderFn func(index int, column string) (color.Color, bool)
 
 	isFirstLine   bool
@@ -19,10 +18,9 @@ type TablePrinter struct {
 	tempColors    []color.Color
 }
 
-func NewTablePrinter(withHeader, darkBackground bool, colorDeciderFn func(index int, column string) (color.Color, bool)) *TablePrinter {
+func NewTablePrinter(withHeader bool, colorDeciderFn func(index int, column string) (color.Color, bool)) *TablePrinter {
 	return &TablePrinter{
 		WithHeader:     withHeader,
-		DarkBackground: darkBackground,
 		ColorDeciderFn: colorDeciderFn,
 		indexColorMap:  map[int]color.Color{},
 		tempColors:     []color.Color{},
@@ -35,12 +33,12 @@ func (tp *TablePrinter) Print(r io.Reader, w io.Writer) {
 	for scanner.Scan() {
 		line := scanner.Text()
 		if tp.isHeader(line) {
-			fmt.Fprintf(w, "%s\n", color.Apply(line, getHeaderColorByBackground(tp.DarkBackground)))
+			fmt.Fprintf(w, "%s\n", color.Apply(line, getHeaderColorByBackground()))
 			tp.isFirstLine = false
 			continue
 		}
 
-		tp.printLineAsTableFormat(w, line, getColorsByBackground(tp.DarkBackground))
+		tp.printLineAsTableFormat(w, line, getColorsByBackground())
 	}
 }
 

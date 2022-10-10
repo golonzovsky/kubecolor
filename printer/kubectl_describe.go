@@ -11,8 +11,7 @@ import (
 
 // DescribePrinter is a specific printer to print kubectl describe format.
 type DescribePrinter struct {
-	DarkBackground bool
-	TablePrinter   *TablePrinter
+	TablePrinter *TablePrinter
 }
 
 func (dp *DescribePrinter) Print(r io.Reader, w io.Writer) {
@@ -72,13 +71,13 @@ func (dp *DescribePrinter) Print(r io.Reader, w io.Writer) {
 
 		// when there are multiple columns, treat is as table format
 		if len(columns) > 2 {
-			dp.TablePrinter.printLineAsTableFormat(w, line, getColorsByBackground(dp.DarkBackground))
+			dp.TablePrinter.printLineAsTableFormat(w, line, getColorsByBackground())
 			continue
 		}
 
 		// First, write the first value assuming it's a key
-		keyColor := getColorByKeyIndent(indentCnt, basicIndentWidth, dp.DarkBackground)
-		valColor := getColorByValueType(columns[0], dp.DarkBackground)
+		keyColor := getColorByKeyIndent(indentCnt, basicIndentWidth)
+		valColor := getColorByValueType(columns[0])
 
 		// TODO: Remove this if statement for workaround
 		// Basically, kubectl describe output has its indentation level
@@ -109,6 +108,6 @@ func (dp *DescribePrinter) Print(r io.Reader, w io.Writer) {
 
 		spacesPos := spacesIndices[0]
 		spacesCnt := spacesPos[1] - spacesPos[0]
-		fmt.Fprintf(w, "%s%s\n", toSpaces(spacesCnt), color.Apply(columns[1], getColorByValueType(columns[1], dp.DarkBackground)))
+		fmt.Fprintf(w, "%s%s\n", toSpaces(spacesCnt), color.Apply(columns[1], getColorByValueType(columns[1])))
 	}
 }
