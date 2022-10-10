@@ -42,5 +42,5 @@ func (op *OptionsPrinter) Print(r io.Reader, w io.Writer) {
 }
 
 func (op *OptionsPrinter) firstLineColor() color.Color {
-	return StringColorForDark
+	return StringColor
 }

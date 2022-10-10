@@ -33,7 +33,7 @@ func (tp *TablePrinter) Print(r io.Reader, w io.Writer) {
 	for scanner.Scan() {
 		line := scanner.Text()
 		if tp.isHeader(line) {
-			fmt.Fprintf(w, "%s\n", color.Apply(line, getHeaderColorByBackground()))
+			fmt.Fprintf(w, "%s\n", color.Apply(line, getHeaderColor()))
 			tp.isFirstLine = false
 			continue
 		}

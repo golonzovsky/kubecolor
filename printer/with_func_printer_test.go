@@ -19,7 +19,7 @@ func Test_WithFuncPrinter_Print(t *testing.T) {
 		{
 			name: "colored in white",
 			fn: func(_ string) color.Color {
-				return color.White
+				return color.GrayLight
 			},
 			input: testutil.NewHereDoc(`
 				test
@@ -29,7 +29,7 @@ func Test_WithFuncPrinter_Print(t *testing.T) {
 				%s
 				%s
 				%s
-				`, color.Apply("test", color.White), color.Apply("test2", color.White), color.Apply("test3", color.White)),
+				`, color.Apply("test", color.GrayLight), color.Apply("test2", color.GrayLight), color.Apply("test3", color.GrayLight)),
 		},
 		{
 			name: "color changes by line",
@@ -37,7 +37,7 @@ func Test_WithFuncPrinter_Print(t *testing.T) {
 				if line == "test2" {
 					return color.Red
 				}
-				return color.White
+				return color.GrayLight
 			},
 			input: testutil.NewHereDoc(`
 				test
@@ -47,7 +47,7 @@ func Test_WithFuncPrinter_Print(t *testing.T) {
 				%s
 				%s
 				%s
-				`, color.Apply("test", color.White), color.Apply("test2", color.Red), color.Apply("test3", color.White)),
+				`, color.Apply("test", color.GrayLight), color.Apply("test2", color.Red), color.Apply("test3", color.GrayLight)),
 		},
 	}
 	for _, tt := range tests {

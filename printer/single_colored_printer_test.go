@@ -18,7 +18,7 @@ func Test_SingleColoredPrinter_Print(t *testing.T) {
 	}{
 		{
 			name:  "colored in white",
-			color: color.White,
+			color: color.GrayLight,
 			input: testutil.NewHereDoc(`
 				test
 				test2
@@ -27,7 +27,7 @@ func Test_SingleColoredPrinter_Print(t *testing.T) {
 				%s
 				%s
 				%s
-				`, color.Apply("test", color.White), color.Apply("test2", color.White), color.Apply("test3", color.White)),
+				`, color.Apply("test", color.GrayLight), color.Apply("test2", color.GrayLight), color.Apply("test3", color.GrayLight)),
 		},
 		{
 			name:  "colored in red",

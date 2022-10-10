@@ -121,7 +121,7 @@ func ColorStatus(status string) (color.Color, bool) {
 	// "NodeReady",
 	// "Started",
 	// "Normal",
-	return color.White, false
+	return color.GrayLight, false
 }
 
 // Print reads r then write it to w, its format is based on kubectl subcommand.
@@ -175,7 +175,7 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 						return color.Green, true
 					}
 
-					return color.White, false
+					return color.GrayLight, false
 				},
 			)
 		case kp.SubcommandInfo.FormatOption == kubectl.Json:
@@ -220,7 +220,7 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 	}
 
 	if kp.SubcommandInfo.Help {
-		printer = &SingleColoredPrinter{Color: color.White}
+		printer = &SingleColoredPrinter{Color: color.GrayLight}
 	}
 
 	printer.Print(r, w)

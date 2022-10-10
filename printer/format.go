@@ -17,9 +17,9 @@ func toSpaces(n int) string {
 func getColorByKeyIndent(indent int, basicIndentWidth int) color.Color {
 	switch indent / basicIndentWidth % 2 {
 	case 1:
-		return color.White
+		return color.Blue
 	default:
-		return color.Yellow
+		return color.Blue
 	}
 }
 
@@ -27,26 +27,26 @@ func getColorByKeyIndent(indent int, basicIndentWidth int) color.Color {
 // This is intended to be used to colorize any structured data e.g. Json, Yaml.
 func getColorByValueType(val string) color.Color {
 	if val == "null" || val == "<none>" || val == "<unknown>" {
-		return NullColorForDark
+		return NullColor
 	}
 
 	if val == "true" || val == "false" {
-		return BoolColorForDark
+		return BoolColor
 	}
 
 	if _, err := strconv.Atoi(val); err == nil {
-		return NumberColorForDark
+		return NumberColor
 	}
 
-	return StringColorForDark
+	return StringColor
 }
 
 func getColorsByBackground() []color.Color {
 	return colorsForDarkBackground
 }
 
-func getHeaderColorByBackground() color.Color {
-	return HeaderColorForDark
+func getHeaderColor() color.Color {
+	return HeaderColor
 }
 
 // findIndent returns a length of indent (spaces at left) in the given line
