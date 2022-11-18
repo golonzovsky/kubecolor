@@ -18,16 +18,13 @@ Other changes:
 Colorize your kubectl output
 
 * get pods
-
-![image](https://user-images.githubusercontent.com/60682957/95733375-04929680-0cbd-11eb-82f3-adbcfecf4a3e.png)
+![Screenshot from 2022-11-18 11-19-49](https://user-images.githubusercontent.com/2477950/202679195-944be010-76d0-4c3b-9d80-7c9dee25c984.png)
 
 * describe pods
-
-![image](https://user-images.githubusercontent.com/60682957/95733389-08beb400-0cbd-11eb-983b-cf5138277fe3.png)
+![Screenshot from 2022-11-18 11-20-45](https://user-images.githubusercontent.com/2477950/202679382-1f4a8c16-0e8a-43db-8ed6-6349d9764a66.png)
 
 * something wrong
-
-![image](https://user-images.githubusercontent.com/60682957/95733397-0a887780-0cbd-11eb-8875-bb1000e0e597.png)
+![Screenshot from 2022-11-18 11-21-42](https://user-images.githubusercontent.com/2477950/202679611-fabfa2aa-3fb1-4b01-86a7-df75899d6fa2.png)
 
 ## What's this?
 
