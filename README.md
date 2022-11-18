@@ -7,6 +7,7 @@ This one is fork of https://github.com/kubecolor/kubecolor with more colors, cau
 
 Other changes:
 - use muesli/termenv for colors
+- different colors for statuses, restarted pods, fresh pods, etc
 - use yh for yaml coloring
 - remove light background 
 
