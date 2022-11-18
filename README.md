@@ -3,7 +3,7 @@
 ## fork info
 original repo was https://github.com/hidetatz/kubecolor/, it was forked in https://github.com/kubecolor/kubecolor to fix completion bug, and it seems most active now.
 
-This one is fork of https://github.com/kubecolor/kubecolor with more colors, cause https://github.com/hidetatz/kubecolor/pull/40 removed most of the coloring.    
+This one is fork of https://github.com/kubecolor/kubecolor with more colors, cause https://github.com/hidetatz/kubecolor/pull/40 removed most of the coloring. (see screenshot comparison in https://github.com/kubecolor/kubecolor/issues/4)    
 
 Other changes:
 - use muesli/termenv for colors
