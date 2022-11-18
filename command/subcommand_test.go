@@ -3,8 +3,8 @@ package command
 import (
 	"testing"
 
-	"github.com/kubecolor/kubecolor/kubectl"
-	"github.com/kubecolor/kubecolor/testutil"
+	"github.com/golonzovsky/kubecolor/kubectl"
+	"github.com/golonzovsky/kubecolor/testutil"
 )
 
 func Test_ResolveSubcommand(t *testing.T) {
@@ -21,10 +21,9 @@ func Test_ResolveSubcommand(t *testing.T) {
 			args:             []string{"get", "pods"},
 			isOutputTerminal: func() bool { return true },
 			conf: &KubecolorConfig{
-				Plain:          false,
-				DarkBackground: true,
-				ForceColor:     false,
-				KubectlCmd:     "kubectl",
+				Plain:      false,
+				ForceColor: false,
+				KubectlCmd: "kubectl",
 			},
 			expectedShouldColorize: true,
 			expectedInfo:           &kubectl.SubcommandInfo{Subcommand: kubectl.Get},
@@ -34,10 +33,9 @@ func Test_ResolveSubcommand(t *testing.T) {
 			args:             []string{"get", "pods"},
 			isOutputTerminal: func() bool { return true },
 			conf: &KubecolorConfig{
-				Plain:          true,
-				DarkBackground: true,
-				ForceColor:     false,
-				KubectlCmd:     "kubectl",
+				Plain:      true,
+				ForceColor: false,
+				KubectlCmd: "kubectl",
 			},
 			expectedShouldColorize: false,
 			expectedInfo:           &kubectl.SubcommandInfo{Subcommand: kubectl.Get},
@@ -47,10 +45,9 @@ func Test_ResolveSubcommand(t *testing.T) {
 			args:             []string{"get", "pods", "-h"},
 			isOutputTerminal: func() bool { return true },
 			conf: &KubecolorConfig{
-				Plain:          false,
-				DarkBackground: true,
-				ForceColor:     false,
-				KubectlCmd:     "kubectl",
+				Plain:      false,
+				ForceColor: false,
+				KubectlCmd: "kubectl",
 			},
 			expectedShouldColorize: true,
 			expectedInfo:           &kubectl.SubcommandInfo{Subcommand: kubectl.Get, Help: true},
@@ -60,10 +57,9 @@ func Test_ResolveSubcommand(t *testing.T) {
 			args:             []string{"get", "pods"},
 			isOutputTerminal: func() bool { return true },
 			conf: &KubecolorConfig{
-				Plain:          true,
-				DarkBackground: true,
-				ForceColor:     true,
-				KubectlCmd:     "kubectl",
+				Plain:      true,
+				ForceColor: true,
+				KubectlCmd: "kubectl",
 			},
 			expectedShouldColorize: false,
 			expectedInfo:           &kubectl.SubcommandInfo{Subcommand: kubectl.Get},
@@ -73,10 +69,9 @@ func Test_ResolveSubcommand(t *testing.T) {
 			args:             []string{},
 			isOutputTerminal: func() bool { return true },
 			conf: &KubecolorConfig{
-				Plain:          false,
-				DarkBackground: true,
-				ForceColor:     false,
-				KubectlCmd:     "kubectl",
+				Plain:      false,
+				ForceColor: false,
+				KubectlCmd: "kubectl",
 			},
 			expectedShouldColorize: true,
 			expectedInfo:           &kubectl.SubcommandInfo{Help: true},
@@ -86,10 +81,9 @@ func Test_ResolveSubcommand(t *testing.T) {
 			args:             []string{"get", "pods"},
 			isOutputTerminal: func() bool { return false },
 			conf: &KubecolorConfig{
-				Plain:          false,
-				DarkBackground: true,
-				ForceColor:     false,
-				KubectlCmd:     "kubectl",
+				Plain:      false,
+				ForceColor: false,
+				KubectlCmd: "kubectl",
 			},
 			expectedShouldColorize: false,
 			expectedInfo:           &kubectl.SubcommandInfo{Subcommand: kubectl.Get},
@@ -99,10 +93,9 @@ func Test_ResolveSubcommand(t *testing.T) {
 			args:             []string{"get", "pods"},
 			isOutputTerminal: func() bool { return false },
 			conf: &KubecolorConfig{
-				Plain:          false,
-				DarkBackground: true,
-				ForceColor:     true,
-				KubectlCmd:     "kubectl",
+				Plain:      false,
+				ForceColor: true,
+				KubectlCmd: "kubectl",
 			},
 			expectedShouldColorize: true,
 			expectedInfo:           &kubectl.SubcommandInfo{Subcommand: kubectl.Get},
@@ -112,10 +105,9 @@ func Test_ResolveSubcommand(t *testing.T) {
 			args:             []string{"-h"},
 			isOutputTerminal: func() bool { return true },
 			conf: &KubecolorConfig{
-				Plain:          false,
-				DarkBackground: true,
-				ForceColor:     false,
-				KubectlCmd:     "kubectl",
+				Plain:      false,
+				ForceColor: false,
+				KubectlCmd: "kubectl",
 			},
 			expectedShouldColorize: true,
 			expectedInfo:           &kubectl.SubcommandInfo{Help: true},

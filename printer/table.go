@@ -6,7 +6,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/kubecolor/kubecolor/color"
+	"github.com/golonzovsky/kubecolor/color"
 )
 
 type TablePrinter struct {
@@ -99,7 +99,9 @@ func (tp *TablePrinter) printLineAsTableFormat(w io.Writer, line string, colorsP
 			}
 		}
 		// Write colored column
-		fmt.Fprintf(w, "%s", color.Apply(column, c))
+		//fmt.Fprintf(w, "%s", color.Apply(column, c))
+		fmt.Print(color.Apply(column, c))
+
 		// Write spaces based on actual output
 		// When writing the most left column, no extra spaces needed.
 		if i <= len(spacesIndices)-1 {

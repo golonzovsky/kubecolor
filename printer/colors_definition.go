@@ -1,6 +1,6 @@
 package printer
 
-import "github.com/kubecolor/kubecolor/color"
+import "github.com/golonzovsky/kubecolor/color"
 
 var (
 	alternatingColors = []color.Color{

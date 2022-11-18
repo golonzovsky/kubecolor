@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kubecolor/kubecolor/kubectl"
-	"github.com/kubecolor/kubecolor/testutil"
+	"github.com/golonzovsky/kubecolor/kubectl"
+	"github.com/golonzovsky/kubecolor/testutil"
 )
 
 func Test_KubectlOutputColoredPrinter_Print(t *testing.T) {

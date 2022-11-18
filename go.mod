@@ -1,4 +1,4 @@
-module github.com/kubecolor/kubecolor
+module github.com/golonzovsky/kubecolor
 
 go 1.19
 
@@ -6,7 +6,6 @@ require (
 	github.com/MakeNowJust/heredoc v1.0.0
 	github.com/andreazorzetto/yh v0.4.0
 	github.com/google/go-cmp v0.5.2
-	github.com/mattn/go-colorable v0.1.8
 	github.com/mattn/go-isatty v0.0.16
 	github.com/muesli/termenv v0.13.0
 )

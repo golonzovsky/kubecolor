@@ -39,7 +39,7 @@ brews:
     owner: kubecolor
     name: homebrew-tap
     token: "{{ .Env.GLOBAL_GITHUB_TOKEN }}"
-  homepage: "https://github.com/kubecolor/kubecolor"
+  homepage: "https://github.com/golonzovsky/kubecolor"
   description: "Colorize your kubectl output"
   license: "MIT"
   folder: Formula

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/kubecolor/kubecolor/color"
-	"github.com/kubecolor/kubecolor/kubectl"
+	"github.com/golonzovsky/kubecolor/color"
+	"github.com/golonzovsky/kubecolor/kubectl"
 )
 
 // KubectlOutputColoredPrinter is a printer to print data depending on

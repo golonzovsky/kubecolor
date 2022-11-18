@@ -1,8 +1,19 @@
 # kubecolor
 
-![test](https://github.com/kubecolor/kubecolor/workflows/test/badge.svg?branch=main)
-[![Go Report Card](https://goreportcard.com/badge/github.com/kubecolor/kubecolor)](https://goreportcard.com/report/github.com/kubecolor/kubecolor)
-[![codecov](https://codecov.io/gh/kubecolor/kubecolor/branch/main/graph/badge.svg?token=k6ysAa5ghD)](https://codecov.io/gh/kubecolor/kubecolor/)
+## fork info
+original repo was https://github.com/hidetatz/kubecolor/, it was forked in https://github.com/kubecolor/kubecolor to fix completion bug, and it seems most active now.
+
+This one is fork of https://github.com/kubecolor/kubecolor with more colors, cause https://github.com/hidetatz/kubecolor/pull/40 removed most of the coloring.    
+
+Other changes:
+- use muesli/termenv for colors
+- use yh for yaml coloring
+- remove light background 
+
+
+![test](https://github.com/golonzovsky/kubecolor/workflows/test/badge.svg?branch=main)
+[![Go Report Card](https://goreportcard.com/badge/github.com/golonzovsky/kubecolor)](https://goreportcard.com/report/github.com/kubecolor/kubecolor)
+[![codecov](https://codecov.io/gh/golonzovsky/kubecolor/branch/main/graph/badge.svg?token=k6ysAa5ghD)](https://codecov.io/gh/kubecolor/kubecolor/)
 
 Colorize your kubectl output
 
@@ -46,20 +57,20 @@ Additionally, if `kubectl` resulted an error, kubecolor just shows the error mes
 
 ### Download binary via GitHub release
 
-Go to [Release page](https://github.com/kubecolor/kubecolor/releases) then download the binary which fits your environment.
+Go to [Release page](https://github.com/golonzovsky/kubecolor/releases) then download the binary which fits your environment.
 
 ### Manually via go command
 
 *Note: if you install kubecolor via go command, --kubecolor-version  might not work*
 
 ```sh
-go install github.com/kubecolor/kubecolor/cmd/kubecolor@latest
+go install github.com/golonzovsky/kubecolor/cmd/kubecolor@latest
 ```
 
 If you are not using module mode (or if just above doesn't work), try below:
 
 ```sh
-go get -u github.com/kubecolor/kubecolor/cmd/kubecolor
+go get -u github.com/golonzovsky/kubecolor/cmd/kubecolor
 ```
 
 ## Usage

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kubecolor/kubecolor/testutil"
+	"github.com/golonzovsky/kubecolor/testutil"
 )
 
 func Test_VersionPrinter_Print(t *testing.T) {
@@ -66,7 +66,7 @@ func Test_VersionShortPrinter_Print(t *testing.T) {
 			t.Parallel()
 			r := strings.NewReader(tt.input)
 			var w bytes.Buffer
-			printer := VersionShortPrinter{DarkBackground: tt.darkBackground}
+			printer := VersionShortPrinter{}
 			printer.Print(r, &w)
 			testutil.MustEqual(t, tt.expected, w.String())
 		})

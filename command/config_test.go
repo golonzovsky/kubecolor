@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/kubecolor/kubecolor/testutil"
+	"github.com/golonzovsky/kubecolor/testutil"
 )
 
 func Test_ResolveConfig(t *testing.T) {

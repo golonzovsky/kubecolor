@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/kubecolor/kubecolor/color"
+	"github.com/golonzovsky/kubecolor/color"
 )
 
 // SingleColoredPrinter is a printer to print something in pre-cofigured color.

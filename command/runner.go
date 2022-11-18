@@ -10,15 +10,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kubecolor/kubecolor/color"
-	"github.com/kubecolor/kubecolor/kubectl"
-	"github.com/kubecolor/kubecolor/printer"
-	"github.com/mattn/go-colorable"
-)
-
-var (
-	Stdout = colorable.NewColorableStdout()
-	Stderr = colorable.NewColorableStderr()
+	"github.com/golonzovsky/kubecolor/color"
+	"github.com/golonzovsky/kubecolor/kubectl"
+	"github.com/golonzovsky/kubecolor/printer"
 )
 
 type Printers struct {
@@ -61,8 +55,8 @@ func Run(args []string, version string) error {
 	// when should not colorize, just run command and return
 	// TODO: right now, krew is unsupported by kubecolor but it should be.
 	if !shouldColorize {
-		cmd.Stdout = Stdout
-		cmd.Stderr = Stderr
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
 		if err := cmd.Start(); err != nil {
 			return err
 		}
@@ -108,14 +102,14 @@ func Run(args []string, version string) error {
 		}()
 
 		// This can panic when kubecolor has bug, so recover in defer
-		printers.FullColoredPrinter.Print(outReader, Stdout)
+		printers.FullColoredPrinter.Print(outReader, os.Stdout)
 	}()
 
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
 		// This will unlikely panic
-		printers.ErrorPrinter.Print(errReader, Stderr)
+		printers.ErrorPrinter.Print(errReader, os.Stderr)
 	}()
 
 	wg.Wait()

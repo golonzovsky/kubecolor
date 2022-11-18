@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/kubecolor/kubecolor/color"
+	"github.com/golonzovsky/kubecolor/color"
 )
 
 // WithFuncPrinter is a printer to print something based on injected logic.

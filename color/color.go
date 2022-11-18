@@ -7,7 +7,7 @@ import (
 type Color termenv.Color
 
 var (
-	p = termenv.ColorProfile()
+	p = termenv.EnvColorProfile()
 
 	// https://coolors.co/ff0054-ffc31f-73f59f-57b2ef-1f99ea-546a7b-9d4edd-7b2cbf-e0aaff-b9bfca
 
