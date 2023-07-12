@@ -194,7 +194,7 @@ You can customize threshold level by using environment variable `KUBECOLOR_OBJ_F
 KUBECOLOR_OBJ_FRESH="1m" kubecolor get po
 ```
 
-Default value is `60s`.
+Default value is `120s`.
 ## Supported kubectl version
 
 Because kubecolor internally calls `kubectl` command, if you are using unsupported kubectl version, it's also not supported by kubecolor.

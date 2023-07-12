@@ -104,10 +104,11 @@ func ColorStatus(status string) (color.Color, bool) {
 		"Warning":
 		return color.Yellow, true
 	case
-		"Completed":
+		"Completed",
+		"Terminated":
 		return color.Gray, true
 	case
-		"Running":
+		"Running", "Ready":
 		return color.Green, true
 	}
 	// some ok status, not colored:
@@ -149,18 +150,14 @@ func (kp *KubectlOutputColoredPrinter) Print(r io.Reader, w io.Writer) {
 						return col, true
 					}
 
-					if column == "<none>" {
+					if column == "<none>" || column == "None" || column == "0" {
 						return color.Gray, true
 					}
 
 					// When Readiness is "n/m" then yellow
-					if strings.Count(column, "/") == 1 {
+					if ok, _ := regexp.MatchString("\\d+/\\d+", column); ok {
 						if arr := strings.Split(column, "/"); arr[0] != arr[1] {
-							_, e1 := strconv.Atoi(arr[0])
-							_, e2 := strconv.Atoi(arr[1])
-							if e1 == nil && e2 == nil { // check both is number
-								return color.Yellow, true
-							}
+							return color.Yellow, true
 						}
 						return color.Green, true
 					}
