@@ -156,3 +156,62 @@ func Test_findIndent(t *testing.T) {
 		})
 	}
 }
+
+func Test_ColorRestarts(t *testing.T) {
+	theme := &config.Theme{Status: config.ThemeStatus{Warning: color.MustParse("yellow")}}
+	tests := []struct {
+		input   string
+		matched bool
+	}{
+		{"3 (2h ago)", true},
+		{"14 (5m12s ago)", true},
+		{"0", false},
+		{"3", false},
+		{"43s (x150 over 21h)", false},
+		{"3 (2h)", false},
+		{"abc (2h ago)", false},
+	}
+	for _, tt := range tests {
+		got, ok := ColorRestarts(tt.input, theme)
+		if ok != tt.matched {
+			t.Errorf("%q: matched=%v, expected %v", tt.input, ok, tt.matched)
+		}
+		if ok && got != color.MustParse("yellow").Render(tt.input) {
+			t.Errorf("%q: got %q", tt.input, got)
+		}
+		if !ok && got != tt.input {
+			t.Errorf("%q: expected unchanged, got %q", tt.input, got)
+		}
+	}
+}
+
+func Test_ColorStatus_finished(t *testing.T) {
+	theme := &config.Theme{Status: config.ThemeStatus{
+		Success:  color.MustParse("green"),
+		Warning:  color.MustParse("yellow"),
+		Finished: color.MustParse("gray"),
+	}}
+	for _, status := range []string{"Completed", "Terminated", "Succeeded"} {
+		got, ok := ColorStatus(status, theme)
+		if !ok || got != color.MustParse("gray").Render(status) {
+			t.Errorf("%q: got %q, ok=%v", status, got, ok)
+		}
+	}
+	if got, _ := ColorStatus("Running", theme); got != color.MustParse("green").Render("Running") {
+		t.Errorf("Running: got %q", got)
+	}
+}
+
+func Test_TryColorDataValue_ip(t *testing.T) {
+	theme := &config.Theme{Data: config.ThemeData{String: color.MustParse("white"), IP: color.MustParse("blue")}}
+	if got, ok := TryColorDataValue("10.0.0.1", theme); !ok || got.String() != "blue" {
+		t.Errorf("ip with theme.data.ip set: got %q, ok=%v", got, ok)
+	}
+	if got, ok := TryColorDataValue("1.42.0", theme); ok || got.String() != "white" {
+		t.Errorf("version-like string: got %q, ok=%v", got, ok)
+	}
+	unset := &config.Theme{Data: config.ThemeData{String: color.MustParse("white")}}
+	if got, ok := TryColorDataValue("10.0.0.1", unset); ok || got.String() != "white" {
+		t.Errorf("ip with theme.data.ip unset: got %q, ok=%v", got, ok)
+	}
+}

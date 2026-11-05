@@ -12,9 +12,9 @@ nginx-qdf9b   1/1     Running   0          6d6h
 --------------------------------------------------------------------------------
 
 [1mNAME          READY   STATUS    RESTARTS   AGE[0m
-[37mnginx-dnmv5[0m   [36m1/1[0m     [32mRunning[0m   [36m0[0m          [37m6d6h[0m
-[37mnginx-m8pbc[0m   [36m1/1[0m     [32mRunning[0m   [36m0[0m          [37m6d6h[0m
-[37mnginx-qdf9b[0m   [36m1/1[0m     [32mRunning[0m   [36m0[0m          [37m6d6h[0m
+[37mnginx-dnmv5[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [37m6d6h[0m
+[37mnginx-m8pbc[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [37m6d6h[0m
+[37mnginx-qdf9b[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [37m6d6h[0m
 
 ================================================================================
 # multiple headers
@@ -33,9 +33,9 @@ replicaset.apps/nginx-6799fc88d8   3         3         3       19d
 --------------------------------------------------------------------------------
 
 [1mNAME                         READY   STATUS    RESTARTS   AGE[0m
-[37mpod/nginx-8spn9[0m              [36m1/1[0m     [32mRunning[0m   [36m1[0m          [37m19d[0m
-[37mpod/nginx-dplns[0m              [36m1/1[0m     [32mRunning[0m   [36m1[0m          [37m19d[0m
-[37mpod/nginx-lpv5x[0m              [36m1/1[0m     [32mRunning[0m   [36m1[0m          [37m19d[0m
+[37mpod/nginx-8spn9[0m              [32m1/1[0m     [32mRunning[0m   [36m1[0m          [37m19d[0m
+[37mpod/nginx-dplns[0m              [32m1/1[0m     [32mRunning[0m   [36m1[0m          [37m19d[0m
+[37mpod/nginx-lpv5x[0m              [32m1/1[0m     [32mRunning[0m   [36m1[0m          [37m19d[0m
 
 [1mNAME                               DESIRED   CURRENT   READY   AGE[0m
 [37mreplicaset.apps/nginx[0m              [36m3[0m         [37m3[0m         [36m3[0m       [37m19d[0m
@@ -52,9 +52,9 @@ nginx-qdf9b   1/1     Running   0          6d6h
 
 --------------------------------------------------------------------------------
 
-[37mnginx-dnmv5[0m   [36m1/1[0m     [32mRunning[0m   [36m0[0m          [37m6d6h[0m
-[37mnginx-m8pbc[0m   [36m1/1[0m     [32mRunning[0m   [36m0[0m          [37m6d6h[0m
-[37mnginx-qdf9b[0m   [36m1/1[0m     [32mRunning[0m   [36m0[0m          [37m6d6h[0m
+[37mnginx-dnmv5[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [37m6d6h[0m
+[37mnginx-m8pbc[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [37m6d6h[0m
+[37mnginx-qdf9b[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [37m6d6h[0m
 
 ================================================================================
 # light theme
@@ -70,9 +70,9 @@ nginx-qdf9b   1/1     Running   0          6d6h
 --------------------------------------------------------------------------------
 
 [1mNAME          READY   STATUS    RESTARTS   AGE[0m
-[30mnginx-dnmv5[0m   [34m1/1[0m     [32mRunning[0m   [34m0[0m          [30m6d6h[0m
-[30mnginx-m8pbc[0m   [34m1/1[0m     [32mRunning[0m   [34m0[0m          [30m6d6h[0m
-[30mnginx-qdf9b[0m   [34m1/1[0m     [32mRunning[0m   [34m0[0m          [30m6d6h[0m
+[30mnginx-dnmv5[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [30m6d6h[0m
+[30mnginx-m8pbc[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [30m6d6h[0m
+[30mnginx-qdf9b[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [30m6d6h[0m
 
 ================================================================================
 # a table whose some parts are missing can be handled
@@ -128,9 +128,9 @@ nginx-qdf9b   0/2     Init:ErrImagePull       0          2m3s
 --------------------------------------------------------------------------------
 
 [1mNAME          READY   STATUS                  RESTARTS   AGE[0m
-[37mnginx-dnmv5[0m   [33m0/2[0m     [31mInit:ImagePullBackOff[0m   [36m0[0m          [37m2m3s[0m
-[37mnginx-m8pbc[0m   [33m0/2[0m     [33mInit:0/1[0m                [36m0[0m          [37m2m3s[0m
-[37mnginx-qdf9b[0m   [33m0/2[0m     [31mInit:ErrImagePull[0m       [36m0[0m          [37m2m3s[0m
+[37mnginx-dnmv5[0m   [33m0/2[0m     [31mInit:ImagePullBackOff[0m   [90;3m0[0m          [37m2m3s[0m
+[37mnginx-m8pbc[0m   [33m0/2[0m     [33mInit:0/1[0m                [90;3m0[0m          [37m2m3s[0m
+[37mnginx-qdf9b[0m   [33m0/2[0m     [31mInit:ErrImagePull[0m       [90;3m0[0m          [37m2m3s[0m
 
 ================================================================================
 # multiple statuses
@@ -181,5 +181,97 @@ bad-cert      False   bad-secret    5d
 --------------------------------------------------------------------------------
 
 [1mNAME          READY   SECRET        AGE[0m
-[37mmy-cert[0m       [32mTrue[0m    [37mmy-secret[0m     [36m30d[0m
-[37mbad-cert[0m      [31mFalse[0m   [37mbad-secret[0m    [36m5d[0m
+[37mmy-cert[0m       [32mTrue[0m    [37mmy-secret[0m     [38;2;104;104;104m30d[0m
+[37mbad-cert[0m      [31mFalse[0m   [37mbad-secret[0m    [38;2;29;193;33m5d[0m
+
+================================================================================
+# restarts
+$ kubectl get pods
+================================================================================
+
+NAME    READY   STATUS    RESTARTS     AGE
+api-1   1/1     Running   3 (2h ago)   4h
+api-2   1/1     Running   0            4h
+
+--------------------------------------------------------------------------------
+
+[1mNAME    READY   STATUS    RESTARTS     AGE[0m
+[37mapi-1[0m   [32m1/1[0m     [32mRunning[0m   [33m3 (2h ago)[0m   [37m4h[0m
+[37mapi-2[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m            [37m4h[0m
+
+================================================================================
+# finished statuses
+$ kubectl get pods
+================================================================================
+
+NAME        READY   STATUS       RESTARTS   AGE
+migrate-1   0/1     Completed    0          3d
+job-1       0/1     Terminated   0          3d
+
+--------------------------------------------------------------------------------
+
+[1mNAME        READY   STATUS       RESTARTS   AGE[0m
+[37mmigrate-1[0m   [33m0/1[0m     [90;3mCompleted[0m    [90;3m0[0m          [37m3d[0m
+[37mjob-1[0m       [33m0/1[0m     [90;3mTerminated[0m   [90;3m0[0m          [37m3d[0m
+
+================================================================================
+# ip addresses when theme.data.ip is set
+KUBECOLOR_THEME_DATA_IP="hiblue"
+$ kubectl get pods -o wide
+================================================================================
+
+NAME    READY   STATUS    RESTARTS   AGE   IP            NODE
+api-1   1/1     Running   0          4h    10.244.3.17   ip-10-0-14-23.ec2.internal
+
+--------------------------------------------------------------------------------
+
+[1mNAME    READY   STATUS    RESTARTS   AGE   IP            NODE[0m
+[37mapi-1[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [37m4h[0m    [94m10.244.3.17[0m   [37mip-10-0-14-23.ec2.internal[0m
+
+================================================================================
+# age gradient
+KUBECOLOR_AGE_GRADIENT="true"
+$ kubectl get pods
+================================================================================
+
+NAME    READY   STATUS    RESTARTS   AGE
+new-1   1/1     Running   0          1m
+mid-1   1/1     Running   0          1h
+old-1   1/1     Running   0          12d
+
+--------------------------------------------------------------------------------
+
+[1mNAME    READY   STATUS    RESTARTS   AGE[0m
+[37mnew-1[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [38;2;29;193;33m1m[0m
+[37mmid-1[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [38;2;60;156;63m1h[0m
+[37mold-1[0m   [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [38;2;104;104;104m12d[0m
+
+================================================================================
+# ready ratios
+$ kubectl get pods
+================================================================================
+
+NAME      READY   STATUS    RESTARTS   AGE
+ok-1      2/2     Running   0          4h
+half-1    0/1     Running   0          4h
+empty-1   0/0     Pending   0          4h
+
+--------------------------------------------------------------------------------
+
+[1mNAME      READY   STATUS    RESTARTS   AGE[0m
+[37mok-1[0m      [32m2/2[0m     [32mRunning[0m   [90;3m0[0m          [37m4h[0m
+[37mhalf-1[0m    [33m0/1[0m     [32mRunning[0m   [90;3m0[0m          [37m4h[0m
+[37mempty-1[0m   [90;3m0/0[0m     [33mPending[0m   [90;3m0[0m          [37m4h[0m
+
+================================================================================
+# zero and none cells are muted
+$ kubectl get pods -o wide
+================================================================================
+
+NAME     READY   STATUS    RESTARTS   AGE   IP          NODE     NOMINATED NODE   READINESS GATES
+api-1    1/1     Running   0          4h    10.0.0.12   node-a   <none>           <none>
+
+--------------------------------------------------------------------------------
+
+[1mNAME     READY   STATUS    RESTARTS   AGE   IP          NODE     NOMINATED NODE   READINESS GATES[0m
+[37mapi-1[0m    [32m1/1[0m     [32mRunning[0m   [90;3m0[0m          [37m4h[0m    [36m10.0.0.12[0m   [37mnode-a[0m   [90;3m<none>[0m           [90;3m<none>[0m

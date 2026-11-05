@@ -72,6 +72,10 @@ func TryColorDataValue(val string, theme *config.Theme) (color.Color, bool) {
 		return theme.Data.Duration, true
 	}
 
+	if !theme.Data.IP.IsNoop() && stringutil.IsIPAddr(val) {
+		return theme.Data.IP, true
+	}
+
 	return theme.Data.String, false
 }
 
@@ -108,6 +112,22 @@ func ColorDuration(age time.Duration, thresholds config.DurationSlice, theme *co
 		return theme.Table.Columns[0]
 	}
 	return theme.Data.Duration
+}
+
+// ColorRestarts colors "kubectl get" restart cells like "3 (2h ago)"
+func ColorRestarts(s string, theme *config.Theme) (string, bool) {
+	count, rest, ok := strings.Cut(s, " (")
+	if !ok || !stringutil.IsOnlyDigits(count) {
+		return s, false
+	}
+	since, ok := strings.CutSuffix(rest, " ago)")
+	if !ok {
+		return s, false
+	}
+	if _, ok := stringutil.ParseHumanDuration(since); !ok {
+		return s, false
+	}
+	return theme.Status.Warning.Render(s), true
 }
 
 // ColorStatus returns the color that should be used for a given status text.
@@ -229,7 +249,6 @@ func colorSingleStatus(status string, theme *config.Theme) (string, bool) {
 		"ContainerCreating",
 		"PodInitializing",
 		"Terminating",
-		"Terminated",
 		"Warning",
 
 		// PV reclaim policy
@@ -243,7 +262,6 @@ func colorSingleStatus(status string, theme *config.Theme) (string, bool) {
 		return theme.Status.Warning.Render(status), true
 	case
 		"Running",
-		"Completed",
 		"Pulled",
 		"Created",
 		"Rebooted",
@@ -262,6 +280,12 @@ func colorSingleStatus(status string, theme *config.Theme) (string, bool) {
 		// PVC status
 		"Bound":
 		return theme.Status.Success.Render(status), true
+
+	case
+		"Completed",
+		"Succeeded",
+		"Terminated":
+		return theme.Status.Finished.Render(status), true
 
 	// Also allow some data-related values, common in CRD statuses (e.g. READY column with True/False)
 	case "null", "<none>", "<unknown>", "<unset>", "<nil>", "<invalid>":

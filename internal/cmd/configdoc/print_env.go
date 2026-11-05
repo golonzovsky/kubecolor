@@ -68,6 +68,9 @@ func (p *EnvPrinter) printField(w io.Writer, field Field, typeString string, pat
 }
 
 func (p *EnvPrinter) formatFallback(field Field) string {
+	if field.Default != "" {
+		return field.Default
+	}
 	if field.DefaultFrom != "" {
 		return fmt.Sprintf("$KUBECOLOR_%s", strings.ToUpper(strings.ReplaceAll(field.DefaultFrom, ".", "_")))
 	}

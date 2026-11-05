@@ -2,6 +2,7 @@ package stringutil
 
 import (
 	"iter"
+	"net/netip"
 	"strconv"
 	"strings"
 	"time"
@@ -170,4 +171,13 @@ func Runes2(s string) iter.Seq2[int, rune] {
 			}
 		}
 	}
+}
+
+// IsIPAddr reports whether s is an IP address or CIDR, e.g "10.0.0.1" or "fd00::/8"
+func IsIPAddr(s string) bool {
+	if _, err := netip.ParseAddr(s); err == nil {
+		return true
+	}
+	_, err := netip.ParsePrefix(s)
+	return err == nil
 }

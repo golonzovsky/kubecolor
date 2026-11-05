@@ -34,13 +34,13 @@ Volumes:
 [96mNode[0m:         [93mminikube/172.17.0.3[0m
 [96mReady[0m:        [32mtrue[0m
 [96mStart Time[0m:   [93mSat, 10 Oct 2020 14:07:17 +0900[0m
-[96mLabels[0m:       app=[93mnginx[0m
+[96mLabels[0m:       [2mapp=[0m[93mnginx[0m
 [96mAnnotations[0m:  [90;3m<none>[0m
 [96mContainers[0m:
   [36mcontainer-1[0m:
     [96mEnvironment Variables from[0m:
-      anycm	ConfigMap  Optional: [32mtrue[0m
-      anysec	Secret     Optional: [31mfalse[0m
+      [2manycm	ConfigMap  Optional: [0m[32mtrue[0m
+      [2manysec	Secret     Optional: [0m[31mfalse[0m
 [96mConditions[0m:
   [36mType[0m              [93mStatus[0m
   [36mInitialized[0m       [32mTrue[0m
@@ -170,12 +170,12 @@ PolicyRule:
 --------------------------------------------------------------------------------
 
 [96mName[0m:         [93mcert-manager:leaderelection[0m
-[96mLabels[0m:       app=[93mcert-manager[0m
-							app.kubernetes.io/version=[93mv1.12.3[0m
-							some-label=[31mfalse[0m
-[96mAnnotations[0m:  meta.helm.sh/release-name: [93mcert-manager[0m
-							meta.helm.sh/release-namespace: [93mnais-system[0m
-							some-annotation: [32mtrue[0m
+[96mLabels[0m:       [2mapp=[0m[93mcert-manager[0m
+							[2mapp.kubernetes.io/version=[0m[93mv1.12.3[0m
+							[2msome-label=[0m[31mfalse[0m
+[96mAnnotations[0m:  [2mmeta.helm.sh/release-name: [0m[93mcert-manager[0m
+							[2mmeta.helm.sh/release-namespace: [0m[93mnais-system[0m
+							[2msome-annotation: [0m[32mtrue[0m
 [96mPolicyRule[0m:
 	[1mResources                   Non-Resource URLs  Resource Names             Verbs[0m
 	[1m---------                   -----------------  --------------             -----[0m
@@ -279,14 +279,14 @@ Events:                      <none>
 [96mService Account[0m:  [93mtraefik[0m
 [96mNode[0m:             [93mminikube-123/192.168.1.2[0m
 [96mStart Time[0m:       [93mTue, 26 Mar 2024 21:07:39 +0100[0m
-[96mLabels[0m:           app.kubernetes.io/instance=[93mtraefik-traefik[0m
-                  app.kubernetes.io/managed-by=[93mHelm[0m
-                  app.kubernetes.io/name=[93mtraefik[0m
-                  helm.sh/chart=[93mtraefik-26.1.0[0m
-                  pod-template-hash=[93m6b445777bf[0m
-[96mAnnotations[0m:      cni.projectcalico.org/containerID: [93m45fb53247b8633bc6c7de3c68f808a2177ddb7f34bb0974e98f1dc4608f5295e[0m
-                  cni.projectcalico.org/podIP: [93m10.1.2.34/32[0m
-                  cni.projectcalico.org/podIPs: [93m10.1.2.34/32[0m
+[96mLabels[0m:           [2mapp.kubernetes.io/instance=[0m[93mtraefik-traefik[0m
+                  [2mapp.kubernetes.io/managed-by=[0m[93mHelm[0m
+                  [2mapp.kubernetes.io/name=[0m[93mtraefik[0m
+                  [2mhelm.sh/chart=[0m[93mtraefik-26.1.0[0m
+                  [2mpod-template-hash=[0m[93m6b445777bf[0m
+[96mAnnotations[0m:      [2mcni.projectcalico.org/containerID: [0m[93m45fb53247b8633bc6c7de3c68f808a2177ddb7f34bb0974e98f1dc4608f5295e[0m
+                  [2mcni.projectcalico.org/podIP: [0m[93m10.1.2.34/32[0m
+                  [2mcni.projectcalico.org/podIPs: [0m[93m10.1.2.34/32[0m
 [96mStatus[0m:           [32mRunning[0m
 [96mIP[0m:               [93m10.1.2.34[0m
 [96mIPs[0m:
@@ -300,18 +300,18 @@ Events:                      <none>
     [96mPorts[0m:         [93m9100/TCP, 9000/TCP, 8000/TCP, 8443/TCP[0m
     [96mHost Ports[0m:    [93m0/TCP, 0/TCP, 80/TCP, 443/TCP[0m
     [96mArgs[0m:
-      --global.checknewversion
-      --global.sendanonymoususage
-      --entrypoints.metrics.address=[93m:9100/tcp[0m
-      --entrypoints.traefik.address=[93m:9000/tcp[0m
-      --entrypoints.web.address=[93m:8000/tcp[0m
-      --entrypoints.websecure.address=[93m:8443/tcp[0m
-      --api.dashboard=[32mtrue[0m
-      --providers.kubernetescrd
-      --providers.kubernetesingress
-      --entrypoints.web.http.redirections.entryPoint.to=[93m:443[0m
-      --entrypoints.web.http.redirections.entryPoint.scheme=[93mhttps[0m
-      --entrypoints.websecure.http.tls=[32mtrue[0m
+      [2m--global.checknewversion[0m
+      [2m--global.sendanonymoususage[0m
+      [2m--entrypoints.metrics.address=[0m[93m:9100/tcp[0m
+      [2m--entrypoints.traefik.address=[0m[93m:9000/tcp[0m
+      [2m--entrypoints.web.address=[0m[93m:8000/tcp[0m
+      [2m--entrypoints.websecure.address=[0m[93m:8443/tcp[0m
+      [2m--api.dashboard=[0m[32mtrue[0m
+      [2m--providers.kubernetescrd[0m
+      [2m--providers.kubernetesingress[0m
+      [2m--entrypoints.web.http.redirections.entryPoint.to=[0m[93m:443[0m
+      [2m--entrypoints.web.http.redirections.entryPoint.scheme=[0m[93mhttps[0m
+      [2m--entrypoints.websecure.http.tls=[0m[32mtrue[0m
     [96mState[0m:          [32mRunning[0m
       [36mStarted[0m:      [93mTue, 26 Mar 2024 21:07:40 +0100[0m
     [96mReady[0m:          [32mTrue[0m
@@ -321,8 +321,8 @@ Events:                      <none>
     [96mRequests[0m:
       [36mcpu[0m:      [35m10m[0m
       [36mmemory[0m:   [35m80Mi[0m
-    [96mLiveness[0m:   http-get http://:9000/ping delay=[93m2s timeout=2s period=10s #success=1 #failure=3[0m
-    [96mReadiness[0m:  http-get http://:9000/ping delay=[93m2s timeout=2s period=10s #success=1 #failure=1[0m
+    [96mLiveness[0m:   [93mhttp-get[0m [93mhttp://:9000/ping[0m [2mdelay=[0m2s [2mtimeout=[0m2s [2mperiod=[0m10s [2m#success=[0m[35m1[0m [2m#failure=[0m[35m3[0m
+    [96mReadiness[0m:  [93mhttp-get[0m [93mhttp://:9000/ping[0m [2mdelay=[0m2s [2mtimeout=[0m2s [2mperiod=[0m10s [2m#success=[0m[35m1[0m [2m#failure=[0m[35m1[0m
     [96mEnvironment[0m:
       [36mPOD_NAME[0m:       [93mtraefik-6b445777bf-vxb6v (v1:metadata.name)[0m
       [36mPOD_NAMESPACE[0m:  [93mtraefik (v1:metadata.namespace)[0m
@@ -353,6 +353,56 @@ Events:                      <none>
     [96mDownwardAPI[0m:             [32mtrue[0m
 [96mQoS Class[0m:                   [93mBurstable[0m
 [96mNode-Selectors[0m:              [90;3m<none>[0m
-[96mTolerations[0m:                 node.kubernetes.io/not-ready:NoExecute op=[93mExists for 300s[0m
-                             node.kubernetes.io/unreachable:NoExecute op=[93mExists for 300s[0m
+[96mTolerations[0m:                 [2mnode.kubernetes.io/not-ready:[0m[93mNoExecute[0m [2mop=[0m[93mExists[0m [2mfor[0m 300s
+                             [2mnode.kubernetes.io/unreachable:[0m[93mNoExecute[0m [2mop=[0m[93mExists[0m [2mfor[0m 300s
 [96mEvents[0m:                      [90;3m<none>[0m
+
+================================================================================
+# "=" only splits single-token labels, not values containing spaces
+$ kubectl describe pod
+================================================================================
+
+Name:           api
+Labels:         app=api
+Node-Selectors:  kubernetes.io/os=linux
+Selector:        app=api,tier=web
+Liveness:       http-get http://:http-metrics/ delay=0s timeout=1s period=10s successThreshold=1 failureThreshold=3
+Readiness:      exec [sh -c curl -fsS localhost:8080/ready] delay=5s timeout=1s period=10s #success=1 #failure=3
+Tolerations:    node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                dedicated=gpu:NoSchedule
+                kubernetes.io/arch=arm64:NoSchedule op=Equal
+                nvidia.com/gpu:NoSchedule op=Exists
+                dedicated=system-workload
+                kubernetes.io/arch=amd64
+                CriticalAddonsOnly op=Exists
+
+--------------------------------------------------------------------------------
+
+[96mName[0m:           [93mapi[0m
+[96mLabels[0m:         [2mapp=[0m[93mapi[0m
+[96mNode-Selectors[0m:  [2mkubernetes.io/os=[0m[93mlinux[0m
+[96mSelector[0m:        [2mapp=[0m[93mapi[0m,[2mtier=[0m[93mweb[0m
+[96mLiveness[0m:       [93mhttp-get[0m [93mhttp://:http-metrics/[0m [2mdelay=[0m0s [2mtimeout=[0m1s [2mperiod=[0m10s [2msuccessThreshold=[0m[35m1[0m [2mfailureThreshold=[0m[35m3[0m
+[96mReadiness[0m:      [93mexec[0m [93m[sh[0m [93m-c[0m [93mcurl[0m [93m-fsS[0m [93mlocalhost:8080/ready][0m [2mdelay=[0m5s [2mtimeout=[0m1s [2mperiod=[0m10s [2m#success=[0m[35m1[0m [2m#failure=[0m[35m3[0m
+[96mTolerations[0m:    [2mnode.kubernetes.io/not-ready:[0m[93mNoExecute[0m [2mop=[0m[93mExists[0m [2mfor[0m 300s
+                [2mdedicated=[0m[93mgpu[0m[2m:[0m[93mNoSchedule[0m
+                [2mkubernetes.io/arch=[0m[93marm64[0m[2m:[0m[93mNoSchedule[0m [2mop=[0m[93mEqual[0m
+                [2mnvidia.com/gpu:[0m[93mNoSchedule[0m [2mop=[0m[93mExists[0m
+                [2mdedicated=[0m[93msystem-workload[0m
+                [2mkubernetes.io/arch=[0m[93mamd64[0m
+                [2mCriticalAddonsOnly[0m [2mop=[0m[93mExists[0m
+
+================================================================================
+# taints are never split on =
+$ kubectl describe node
+================================================================================
+
+Taints:             dedicated=gpu:NoSchedule
+                    node-role.kubernetes.io/control-plane:NoSchedule
+Unschedulable:      false
+
+--------------------------------------------------------------------------------
+
+[96mTaints[0m:             [2mdedicated=[0m[93mgpu[0m[2m:[0m[93mNoSchedule[0m
+                    [2mnode-role.kubernetes.io/control-plane:[0m[93mNoSchedule[0m
+[96mUnschedulable[0m:      [31mfalse[0m

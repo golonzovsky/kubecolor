@@ -25,6 +25,9 @@ type Config struct {
 	// (paired by position); ages older than every threshold use theme.data.duration. Thresholds are matched smallest-first,
 	// so a value listed out of order is shadowed by an earlier, larger one.
 	ObjFreshThreshold DurationSlice `jsonschema:"example=5m,example=5m/2h/1d"`
+	// Color "kubectl get" ages on a per-column gradient from the first theme.data.durationFresh color (newest) to
+	// theme.data.duration (oldest, gray when unset). Needs the whole table, so "--watch" falls back to objFreshThreshold.
+	AgeGradient bool `jsonschema:"default=true"`
 
 	Preset Preset // Color theme preset
 	Theme  Theme
@@ -45,9 +48,11 @@ func NewViper() *viper.Viper {
 
 	v.MustBindEnv("kubectl", "KUBECTL_COMMAND")
 	v.MustBindEnv("objfreshthreshold", "KUBECOLOR_OBJ_FRESH")
+	v.MustBindEnv("agegradient", "KUBECOLOR_AGE_GRADIENT")
 	// NOTE: Don't bind PAGER here as it should be overwritten by the config file
 
 	v.SetDefault("kubectl", "kubectl")
+	v.SetDefault("agegradient", true)
 	// mapstructure doesn't like "type X string" values, so we have to convert it via string(...)
 	v.SetDefault(PresetKey, string(PresetDefault))
 	v.SetDefault("paging", string(PagingDefault))

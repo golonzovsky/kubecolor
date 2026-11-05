@@ -339,6 +339,14 @@
           "$ref": "#/$defs/color",
           "description": "used when the value is null, nil, or none"
         },
+        "zero": {
+          "$ref": "#/$defs/color",
+          "description": "used when a table cell is a bare \"0\", e.g zero restarts"
+        },
+        "ip": {
+          "$ref": "#/$defs/color",
+          "description": "used when the value is an IP address or CIDR, e.g \"10.0.0.1\"; unset means no special coloring"
+        },
         "quantity": {
           "$ref": "#/$defs/color",
           "description": "used when the value is a quantity, e.g \"100m\" or \"5Gi\""
@@ -401,6 +409,10 @@
         "key": {
           "$ref": "#/$defs/colorSlice",
           "description": "used on keys. The multiple colors are cycled based on indentation."
+        },
+        "pairKey": {
+          "$ref": "#/$defs/color",
+          "description": "used on the key of key=value pairs inside values, e.g labels, probe settings and toleration keys"
         }
       },
       "additionalProperties": false,
@@ -715,6 +727,10 @@
         "error": {
           "$ref": "#/$defs/color",
           "description": "used in status keywords, e.g \"Failed\", \"Unhealthy\""
+        },
+        "finished": {
+          "$ref": "#/$defs/color",
+          "description": "used in status keywords for things that ran to completion, e.g \"Completed\", \"Terminated\""
         }
       },
       "additionalProperties": false,
@@ -804,6 +820,11 @@
     "objFreshThreshold": {
       "$ref": "#/$defs/durationSlice",
       "description": "Age thresholds, which must be listed in ascending order. Each colors ages below it using theme.data.durationFresh\n(paired by position); ages older than every threshold use theme.data.duration. Thresholds are matched smallest-first,\nso a value listed out of order is shadowed by an earlier, larger one."
+    },
+    "ageGradient": {
+      "type": "boolean",
+      "description": "Color \"kubectl get\" ages on a per-column gradient from the first theme.data.durationFresh color (newest) to\ntheme.data.duration (oldest, gray when unset). Needs the whole table, so \"--watch\" falls back to objFreshThreshold.",
+      "default": true
     },
     "preset": {
       "$ref": "#/$defs/preset",

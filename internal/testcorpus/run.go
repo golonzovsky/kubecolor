@@ -149,6 +149,7 @@ func printCommand(args []string, input string, env []EnvVar) string {
 		SubcommandInfo:    subcommandInfo,
 		Recursive:         subcommandInfo.Recursive,
 		ObjFreshThreshold: cfg.ObjFreshThreshold,
+		AgeGradient:       cfg.AgeGradient,
 		Theme:             &cfg.Theme,
 		KubecolorVersion:  "dev",
 	}

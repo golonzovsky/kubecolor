@@ -77,6 +77,9 @@ func (p *FilePrinter) printField(w io.Writer, field Field, typeString string, pa
 }
 
 func (p *FilePrinter) formatFallback(field Field) string {
+	if field.Default != "" {
+		return field.Default
+	}
 	if field.DefaultFrom != "" {
 		return fmt.Sprintf("$%s", field.DefaultFrom)
 	}

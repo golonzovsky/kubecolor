@@ -48,3 +48,34 @@ func Test_KubectlOutputColoredPrinter_ageColorScopedToGet(t *testing.T) {
 		t.Errorf("events: expected age NOT fresh-colored, got %q", events)
 	}
 }
+
+// The age gradient needs the whole table up front, so it must only wrap
+// non-streaming "kubectl get" tables; --watch keeps the threshold coloring.
+func Test_KubectlOutputColoredPrinter_ageGradientSkipsWatch(t *testing.T) {
+	theme := &config.Theme{
+		Data: config.ThemeData{
+			DurationFresh: color.MustParseSlice("#0000ff"),
+			Duration:      color.MustParse("#ff0000"),
+		},
+	}
+	input := "AGE\n1m\n1d\n"
+	render := func(watch bool) string {
+		p := &KubectlOutputColoredPrinter{
+			SubcommandInfo: &kubectl.SubcommandInfo{Subcommand: kubectl.Get, Watch: watch},
+			AgeGradient:    true,
+			Theme:          theme,
+		}
+		var buf bytes.Buffer
+		p.Print(strings.NewReader(input), &buf)
+		return buf.String()
+	}
+	fresh := color.MustParse("#0000ff").Render("1m")
+	old := color.MustParse("#ff0000").Render("1d")
+	if got := render(false); !strings.Contains(got, fresh) || !strings.Contains(got, old) {
+		t.Errorf("get: expected gradient ends, got %q", got)
+	}
+	// no thresholds -> every age gets theme.data.duration
+	if got := render(true); strings.Contains(got, fresh) || !strings.Contains(got, color.MustParse("#ff0000").Render("1m")) {
+		t.Errorf("get --watch: expected threshold coloring, got %q", got)
+	}
+}

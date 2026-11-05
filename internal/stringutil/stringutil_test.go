@@ -363,3 +363,16 @@ func TestTruncate(t *testing.T) {
 		})
 	}
 }
+
+func TestIsIPAddr(t *testing.T) {
+	for _, s := range []string{"10.0.0.1", "::1", "fe80::1%eth0", "10.0.0.0/16", "2001:db8::/32"} {
+		if !IsIPAddr(s) {
+			t.Errorf("%q: expected to be an IP", s)
+		}
+	}
+	for _, s := range []string{"", "1.2.3", "10.0.0.1:8080", "1.42.0", "node/10.0.0.1", "12d", "8080/TCP", "0"} {
+		if IsIPAddr(s) {
+			t.Errorf("%q: expected not to be an IP", s)
+		}
+	}
+}

@@ -21,6 +21,7 @@ type Field struct {
 	Comment string
 
 	DefaultFrom     string
+	Default         string
 	DefaultFromMany string
 }
 
@@ -92,6 +93,7 @@ func visitGenDecl(decl *ast.GenDecl) (Category, bool) {
 			Comment: strings.Join(comments, "\n"),
 
 			DefaultFrom:     tag.Get("defaultFrom"),
+			Default:         tag.Get("default"),
 			DefaultFromMany: tag.Get("defaultFromMany"),
 		})
 	}

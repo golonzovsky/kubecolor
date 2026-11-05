@@ -19,6 +19,7 @@ type KubectlOutputColoredPrinter struct {
 	SubcommandInfo    *kubectl.SubcommandInfo
 	Recursive         bool
 	ObjFreshThreshold config.DurationSlice
+	AgeGradient       bool
 	Theme             *config.Theme
 	KubecolorVersion  string
 }
@@ -59,7 +60,7 @@ func (p *KubectlOutputColoredPrinter) getPrinter() Printer {
 			// subcommands (e.g. "kubectl events") have age-ish columns like
 			// "43s (x150 over 21h)" that would color inconsistently.
 			colorAge := p.SubcommandInfo.Subcommand == kubectl.Get
-			return NewTablePrinter(
+			table := NewTablePrinter(
 				withHeader,
 				p.Theme,
 				func(_ int, column string) string {
@@ -81,6 +82,21 @@ func (p *KubectlOutputColoredPrinter) getPrinter() Printer {
 						}
 					}
 
+					if colored, ok := ColorRestarts(column, p.Theme); ok {
+						return colored
+					}
+
+					switch column {
+					case "0":
+						return p.Theme.Data.Zero.Render(column)
+					case "<none>":
+						return p.Theme.Data.Null.Render(column)
+					}
+
+					if !p.Theme.Data.IP.IsNoop() && stringutil.IsIPAddr(column) {
+						return p.Theme.Data.IP.Render(column)
+					}
+
 					// Object age: color by which fresh threshold it falls under
 					if colorAge {
 						if age, ok := stringutil.ParseHumanDuration(column); ok {
@@ -91,6 +107,10 @@ func (p *KubectlOutputColoredPrinter) getPrinter() Printer {
 					return column
 				},
 			)
+			if p.AgeGradient && colorAge && !p.SubcommandInfo.Watch {
+				return &AgeGradientTablePrinter{Table: table, Theme: p.Theme}
+			}
+			return table
 
 		case kubectl.OutputJSON:
 			return &JSONPrinter{Theme: p.Theme}

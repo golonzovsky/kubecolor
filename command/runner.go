@@ -43,6 +43,7 @@ var getPrinters = func(subcommandInfo *kubectl.SubcommandInfo, cfg *config.Confi
 			SubcommandInfo:    subcommandInfo,
 			Recursive:         subcommandInfo.Recursive,
 			ObjFreshThreshold: cfg.ObjFreshThreshold,
+			AgeGradient:       cfg.AgeGradient,
 			Theme:             &cfg.Theme,
 			KubecolorVersion:  version,
 		},

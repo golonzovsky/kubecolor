@@ -398,6 +398,8 @@ type ThemeData struct {
 	False  color.Color `defaultFrom:"theme.base.danger"`  // used when value is false
 	Number color.Color `defaultFrom:"theme.base.primary"` // used when the value is a number
 	Null   color.Color `defaultFrom:"theme.base.muted"`   // used when the value is null, nil, or none
+	Zero   color.Color `defaultFrom:"theme.base.muted"`   // used when a table cell is a bare "0", e.g zero restarts
+	IP     color.Color ``                                 // used when the value is an IP address or CIDR, e.g "10.0.0.1"; unset means no special coloring
 
 	Quantity      color.Color `defaultFrom:"theme.data.number"`                                           // used when the value is a quantity, e.g "100m" or "5Gi"
 	Duration      color.Color ``                                                                          // used when the value is a duration, e.g "12m" or "1d12h", and for ages older than every objFreshThreshold
@@ -408,16 +410,17 @@ type ThemeData struct {
 
 type ThemeDataRatio struct {
 	Zero    color.Color `defaultFrom:"theme.base.muted"`   // used for "0/0"
-	Equal   color.Color ``                                 // used for "n/n", e.g "1/1"
+	Equal   color.Color `defaultFrom:"theme.base.success"` // used for "n/n", e.g "1/1"
 	Unequal color.Color `defaultFrom:"theme.base.warning"` // used for "n/m", e.g "0/1"
 }
 
 // ThemeStatus holds colors for status texts, used in for example
 // the "kubectl get" status column
 type ThemeStatus struct {
-	Success color.Color `defaultFrom:"theme.base.success"` // used in status keywords, e.g "Running", "Ready"
-	Warning color.Color `defaultFrom:"theme.base.warning"` // used in status keywords, e.g "Terminating"
-	Error   color.Color `defaultFrom:"theme.base.danger"`  // used in status keywords, e.g "Failed", "Unhealthy"
+	Success  color.Color `defaultFrom:"theme.base.success"` // used in status keywords, e.g "Running", "Ready"
+	Warning  color.Color `defaultFrom:"theme.base.warning"` // used in status keywords, e.g "Terminating"
+	Error    color.Color `defaultFrom:"theme.base.danger"`  // used in status keywords, e.g "Failed", "Unhealthy"
+	Finished color.Color `defaultFrom:"theme.base.muted"`   // used in status keywords for things that ran to completion, e.g "Completed", "Terminated"
 }
 
 // ThemeTable holds colors for table output
@@ -442,7 +445,8 @@ type ThemeStderr struct {
 
 // ThemeDescribe holds colors for the "kubectl describe" output.
 type ThemeDescribe struct {
-	Key color.Slice `defaultFrom:"theme.base.key"` // used on keys. The multiple colors are cycled based on indentation.
+	Key     color.Slice `defaultFrom:"theme.base.key"` // used on keys. The multiple colors are cycled based on indentation.
+	PairKey color.Color `default:"fuzzy"`              // used on the key of key=value pairs inside values, e.g labels, probe settings and toleration keys
 }
 
 // ThemeApply holds colors for the "kubectl apply" output.
@@ -646,6 +650,8 @@ func (t themeViperVisitor) visitorApplyDefaults(viperKey string, value reflect.V
 		}
 		if defaultFrom, ok := tags.Lookup("defaultFrom"); ok {
 			t.setColorOrKey(viperKey, value, defaultFrom)
+		} else if literal, ok := tags.Lookup("default"); ok {
+			t.setColorOrLiteral(viperKey, value, literal)
 		} else {
 			t.setColor(viperKey, value)
 		}
@@ -668,6 +674,13 @@ func (t themeViperVisitor) setColorOrKey(key string, value color.Color, otherKey
 		return
 	}
 	t.viper.SetDefault(key, t.viper.Get(otherKey))
+}
+
+func (t themeViperVisitor) setColorOrLiteral(key string, value color.Color, literal string) {
+	if t.setColor(key, value) {
+		return
+	}
+	t.viper.SetDefault(key, color.MustParse(literal))
 }
 
 func (t themeViperVisitor) setColor(key string, value color.Color) bool {

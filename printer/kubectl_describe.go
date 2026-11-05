@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/kubecolor/kubecolor/internal/bytesutil"
+	"github.com/kubecolor/kubecolor/internal/stringutil"
 	"github.com/kubecolor/kubecolor/scanner/describe"
 )
 
@@ -58,14 +59,7 @@ func (p *DescribePrinter) Print(r io.Reader, w io.Writer) {
 		}
 		fmt.Fprintf(w, "%s", line.Spacing)
 		if len(line.Value) > 0 {
-			val := string(line.Value)
-			if k, v, ok := strings.Cut(val, ": "); ok { // split annotation and env from
-				fmt.Fprint(w, k, ": ", p.colorize(scanner.Path(), v))
-			} else if k, v, ok := strings.Cut(val, "="); ok { // split label
-				fmt.Fprint(w, k, "=", p.colorize(scanner.Path(), v))
-			} else {
-				fmt.Fprint(w, p.colorize(scanner.Path(), val))
-			}
+			fmt.Fprint(w, p.colorizeValue(scanner.Path(), string(line.Value)))
 		}
 		fmt.Fprintf(w, "%s\n", line.Trailing)
 	}
@@ -119,10 +113,7 @@ func (p *DescribePrinter) colorizeArgs(value, pathStr string) (string, bool) {
 	if !strings.HasPrefix(value, "-") {
 		return value, false
 	}
-	// Intentionally empty color, so it gets the same color as keys
-	// where "--my-flag=123" args has no coloring on "--my-flag=",
-	// so "--my-bool-flag" should also not be colored.
-	return value, true
+	return p.pairKey(value), true // same as the "--my-flag=" part of "--my-flag=123"
 }
 
 func matchesAnyRegex(s string, regexes []*regexp.Regexp) bool {
@@ -132,4 +123,93 @@ func matchesAnyRegex(s string, regexes []*regexp.Regexp) bool {
 		}
 	}
 	return false
+}
+
+var describePathsTolerations = []*regexp.Regexp{
+	regexp.MustCompile(`(^|/)Tolerations$`),
+	regexp.MustCompile(`(^|/)Taints$`),
+}
+
+func (p *DescribePrinter) colorizeValue(path describe.Path, val string) string {
+	if matchesAnyRegex(path.String(), describePathsTolerations) {
+		return mapTokens(val, func(i int, tok string) string { return p.colorizeToleration(path, i, tok) })
+	}
+	if k, v, ok := strings.Cut(val, ": "); ok { // annotations and env
+		return p.pairKey(k+": ") + p.colorizePairsOrValue(path, v)
+	}
+	return p.colorizePairsOrValue(path, val)
+}
+
+// colorizePairsOrValue colors "key=value" pairs (labels, probes) with the key
+// left uncolored, and any other value by its type.
+func (p *DescribePrinter) colorizePairsOrValue(path describe.Path, val string) string {
+	if !strings.Contains(val, "=") {
+		return p.colorize(path, val)
+	}
+	return mapTokens(val, func(_ int, tok string) string {
+		if k, v, ok := strings.Cut(tok, "="); ok {
+			return p.pairKey(k+"=") + p.colorize(path, v)
+		}
+		return p.colorize(path, tok)
+	})
+}
+
+// colorizeToleration colors one token of "key[=value][:effect] [op=Op] [for Ns]"
+func (p *DescribePrinter) colorizeToleration(path describe.Path, i int, tok string) string {
+	if i == 0 {
+		keyValue, effect, hasEffect := strings.Cut(tok, ":")
+		key, value, hasValue := strings.Cut(keyValue, "=")
+		var sb strings.Builder
+		switch {
+		case hasValue:
+			sb.WriteString(p.pairKey(key + "="))
+			sb.WriteString(p.colorize(path, value))
+			if hasEffect {
+				sb.WriteString(p.pairKey(":"))
+			}
+		case hasEffect:
+			sb.WriteString(p.pairKey(key + ":"))
+		default:
+			sb.WriteString(p.pairKey(key))
+		}
+		if hasEffect {
+			sb.WriteString(p.colorize(path, effect))
+		}
+		return sb.String()
+	}
+	if k, v, ok := strings.Cut(tok, "="); ok {
+		return p.pairKey(k+"=") + p.colorize(path, v)
+	}
+	if _, ok := stringutil.ParseHumanDuration(tok); ok {
+		return p.colorize(path, tok)
+	}
+	return p.pairKey(tok)
+}
+
+func (p *DescribePrinter) pairKey(s string) string {
+	if s == "" {
+		return ""
+	}
+	return p.TablePrinter.Theme.Describe.PairKey.Render(s)
+}
+
+// mapTokens applies fn to each token of s split on spaces, tabs and commas,
+// keeping the separators as they were
+func mapTokens(s string, fn func(i int, tok string) string) string {
+	var sb strings.Builder
+	start, n := 0, 0
+	for i := 0; i <= len(s); i++ {
+		if i < len(s) && s[i] != ' ' && s[i] != '\t' && s[i] != ',' {
+			continue
+		}
+		if tok := s[start:i]; tok != "" {
+			sb.WriteString(fn(n, tok))
+			n++
+		}
+		if i < len(s) {
+			sb.WriteByte(s[i])
+		}
+		start = i + 1
+	}
+	return sb.String()
 }

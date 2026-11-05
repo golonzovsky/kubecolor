@@ -166,8 +166,8 @@ func Lookup(t reflect.Type) jsonschema.ID {
 // Namer allows customizing of type names.
 func Namer(s string) string {
 	switch s {
-	case "GUID":
-		return "guid"
+	case "GUID", "IP":
+		return strings.ToLower(s)
 	case "Slice":
 		return "colorSlice"
 	}
